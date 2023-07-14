@@ -3,6 +3,8 @@ const mongoose = require('mongoose')
 const user = require('./routes/user')
 const item = require('./routes/item')
 const review = require('./routes/review')
+const payment = require('./routes/payment')
+const cart = require('./routes/cart')
 
 const app=express()
 const port = 4001
@@ -25,6 +27,8 @@ app.use(express.json())
 app.use('/user', user)
 app.use('/item', item)
 app.use('/review', review)
+app.use('/payment', payment)
+app.use('/cart', cart)
 
 app.listen(port, () => {
     console.log(`app starting on ${port}`);
