@@ -25,8 +25,8 @@ router.post('/register',async (req,res) => {
 
 router.get('/getAll',async (req, res) =>{
     try {
-        const register = await User.find()
-        res.json(register)
+        const get = await User.find()
+        res.json(get)
     }catch (error) {
         res.send('Error : '+error)
     }
@@ -34,8 +34,8 @@ router.get('/getAll',async (req, res) =>{
 
 router.get('/get/:id',async (req, res) =>{
     try {
-        const register = await User.findById(req.params.id)
-        res.json(register)
+        const get = await User.findById(req.params.id)
+        res.json(get)
     }catch (error) {
         res.send('Error : '+error)
     }
@@ -43,8 +43,8 @@ router.get('/get/:id',async (req, res) =>{
 
 router.get('/login/:email/:password',async (req, res) =>{
     try {
-        const register = await User.findOne({ email: req.params.email, password: req.params.password })
-        res.json(register)
+        const login = await User.findOne({ email: req.params.email, password: req.params.password })
+        res.json(login)
     }catch (error) {
         res.send('Error : '+error)
     }

@@ -18,15 +18,15 @@ const itemSchema = new mongoose.Schema({
         required:true
     },
     qty_on_hand:{
-        type:int,
+        type:Number,
         required:true
     },
     discount:{
-        type:Double,
+        type:Number,
         required:true
     },
     unit_price:{
-        type:Double,
+        type:Number,
         required:true
     },
 })

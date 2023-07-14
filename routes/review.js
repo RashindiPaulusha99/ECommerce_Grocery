@@ -2,23 +2,21 @@ const express = require('express')
 const app = express()
 const router = express.Router()
 
-const Item = require('../models/item.models')
+const Review = require('../models/review.models')
 
 app.use(express.json())
 
 router.post('/save',async (req,res) => {
-    const item = new Item({
-        name:req.body.name,
+    const review = new Review({
+        item_Id:req.body.item_Id,
         description:req.body.description,
-        category:req.body.category,
-        brand:req.body.brand,
-        qty_on_hand:req.body.qty_on_hand,
-        discount:req.body.discount,
-        unit_price:req.body.unit_price
+        ratings:req.body.ratings,
+        review_user_name:req.body.review_user_name,
+        review_date:req.body.review_date
     })
 
     try {
-        const save = await item.save()
+        const save = await review.save()
         res.json(save)
     }catch (error) {
         res.send('Error : '+error)
@@ -28,7 +26,7 @@ router.post('/save',async (req,res) => {
 
 router.get('/getAll',async (req, res) =>{
     try {
-        const get = await Item.find()
+        const get = await Review.find()
         res.json(get)
     }catch (error) {
         res.send('Error : '+error)
@@ -37,7 +35,7 @@ router.get('/getAll',async (req, res) =>{
 
 router.get('/get/:id',async (req, res) =>{
     try {
-        const get = await Item.findById(req.params.id)
+        const get = await Review.findById(req.params.id)
         res.json(get)
     }catch (error) {
         res.send('Error : '+error)
