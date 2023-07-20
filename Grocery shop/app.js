@@ -5,6 +5,7 @@ const item = require('./routes/item')
 const review = require('./routes/review')
 const payment = require('./routes/payment')
 const cart = require('./routes/cart')
+const category = require('./routes/category')
 
 const app=express()
 const port = 4001
@@ -29,6 +30,7 @@ app.use('/item', item)
 app.use('/review', review)
 app.use('/payment', payment)
 app.use('/cart', cart)
+app.use('/category', category)
 
 app.listen(port, () => {
     console.log(`app starting on ${port}`);
