@@ -6,6 +6,9 @@ const review = require('./routes/review')
 const payment = require('./routes/payment')
 const cart = require('./routes/cart')
 const category = require('./routes/category')
+const brand = require('./routes/brand')
+const Grid = require("gridfs-stream");
+const cors = require('cors'); // Import the cors middleware
 
 const app=express()
 const port = 4001
@@ -24,6 +27,7 @@ con.on("open", () => {
 })
 
 app.use(express.json())
+app.use(cors());
 
 app.use('/user', user)
 app.use('/item', item)
@@ -31,6 +35,7 @@ app.use('/review', review)
 app.use('/payment', payment)
 app.use('/cart', cart)
 app.use('/category', category)
+app.use('/brand', brand)
 
 app.listen(port, () => {
     console.log(`app starting on ${port}`);

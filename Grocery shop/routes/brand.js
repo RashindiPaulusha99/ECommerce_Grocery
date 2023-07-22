@@ -5,8 +5,8 @@ const bodyParser = require("body-parser");
 const path = require('path');
 const fs = require("fs");
 const multer = require("multer");
-const Category = require('../models/category.models')
-const cors = require('cors'); // Import the cors middleware
+const Brand = require('../models/brand.models')
+const cors = require('cors');
 
 require("dotenv").config()
 
@@ -34,7 +34,8 @@ var upload = multer({ storage: storage });
 
 router.post("/save", upload.single("image"), async (req, res) => {
 
-    const category = new Category({
+    const brand = new Brand({
+        brand: req.body.brand,
         category: req.body.category,
         image: {
             data:fs.readFileSync(req.file.path),
@@ -43,7 +44,7 @@ router.post("/save", upload.single("image"), async (req, res) => {
     });
 
     try {
-        const save = await category.save()
+        const save = await brand.save()
         res.json(save)
     }catch (error) {
         res.send('Error : '+error)
@@ -52,7 +53,8 @@ router.post("/save", upload.single("image"), async (req, res) => {
 
 router.put("/update/:id", upload.single("image"), async (req, res) => {
 
-    const post = await Category.findById(req.params.id)
+    const post = await Brand.findById(req.params.id)
+    post.brand = req.body.brand
     post.category = req.body.category
     post.image = {
         data:fs.readFileSync(req.file.path),
@@ -69,7 +71,7 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
 
 router.get('/getAll', async (req, res) => {
     try {
-        const get = await Category.find()
+        const get = await Brand.find()
         res.json(get)
     }catch (error) {
         res.send('Error : '+error)
@@ -78,7 +80,7 @@ router.get('/getAll', async (req, res) => {
 
 router.delete('/delete/:id',async (req, res) =>{
     try {
-        const get = await Category.findById(req.params.id)
+        const get = await Brand.findById(req.params.id)
         const response = await get.remove()
         res.json(response)
     }catch (error) {
@@ -88,7 +90,7 @@ router.delete('/delete/:id',async (req, res) =>{
 
 router.get('/get/:id',async (req, res) =>{
     try {
-        const get = await Category.findById(req.params.id)
+        const get = await Brand.findById(req.params.id)
         res.json(get)
     }catch (error) {
         res.send('Error : '+error)

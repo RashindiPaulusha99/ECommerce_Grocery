@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
 const router = express.Router()
+const cors = require('cors'); // Import the cors middleware
 
 const Item = require('../models/item.models')
 
 app.use(express.json())
+app.use(cors());
 
 router.post('/save',async (req,res) => {
     const item = new Item({

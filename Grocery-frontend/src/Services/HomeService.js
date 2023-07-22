@@ -1,6 +1,6 @@
 import axios from "../data/axios";
 
-class CartService {
+class HomeService {
 
     cartPost = async (data) =>{
         console.log(data)
@@ -16,9 +16,25 @@ class CartService {
     }
 
 
-    fetchCart = async () =>{
+    fetchBrand = async () =>{
         const promise = new Promise((resolve, reject) =>{
-            axios.get('carts')
+
+            axios.get('brand/getAll')
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    fetchCategory = async ()=>{
+
+        const promise = new Promise((resolve, reject) =>{
+
+            axios.get('/category/getAll',{
+            })
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{
@@ -29,4 +45,4 @@ class CartService {
     }
 }
 
-export default new CartService();
+export default new HomeService();
