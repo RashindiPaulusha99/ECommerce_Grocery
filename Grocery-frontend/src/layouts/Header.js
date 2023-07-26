@@ -53,6 +53,12 @@ const Header=()=>{
         });
     }
 
+    const  handleOpenHome=()=>{
+        history.push({
+            pathname:'/home'
+        });
+    }
+
     return(
         <header>
             <div className="container-fluid">
@@ -145,20 +151,20 @@ const Header=()=>{
                                             <CategoryMenu opens={opens} handleClose={handleClose} anchorEl={anchorEl}/>
    
                                         <ul className="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
-                                            <li className="nav-item active nav">
-                                                <a href="home" className="nav-link" >Home</a>
+                                            <li className="nav-item active nav" onClick={handleOpenHome}>
+                                                <a className="nav-link" >Home</a>
                                             </li>
                                             <li className="nav-item dropdown nav">
-                                                <a href="#" className="nav-link">About Us</a>
+                                                <a  className="nav-link">About Us</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="#" className="nav-link nav">Blogs</a>
+                                                <a  className="nav-link nav">Blogs</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="#" className="nav-link nav">Services</a>
+                                                <a  className="nav-link nav">Services</a>
                                             </li>
                                             <li className="nav-item">
-                                                <a href="#" className="nav-link nav">Contact Us</a>
+                                                <a  className="nav-link nav">Contact Us</a>
                                             </li>
                                             
                                         </ul>

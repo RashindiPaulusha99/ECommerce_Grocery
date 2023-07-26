@@ -84,7 +84,6 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     }
 })
 
-
 router.get('/getAll/All',async (req, res) =>{
     try {
         const get = await Item.find()

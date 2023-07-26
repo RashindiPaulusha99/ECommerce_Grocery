@@ -2,20 +2,6 @@ import axios from "../data/axios";
 
 class HomeService {
 
-    cartPost = async (data) =>{
-        console.log(data)
-        const promise = new Promise((resolve, reject) =>{
-            axios.post('carts',data)
-                .then((res) =>{
-                    return resolve(res)
-                }).catch((error) =>{
-                return resolve(error)
-            })
-        })
-        return await promise
-    }
-
-
     fetchBrand = async () =>{
         const promise = new Promise((resolve, reject) =>{
 
@@ -63,6 +49,30 @@ class HomeService {
         const promise = new Promise((resolve, reject) =>{
             axios.get('/item/get/'+id,{
             })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    saveCart = async (data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.post('/cart/save',data)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    getCart = async () =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/cart/getAll')
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{

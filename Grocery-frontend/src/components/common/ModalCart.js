@@ -20,6 +20,7 @@ import TextField from '@mui/material/TextField';
 import HomeService from "../../Services/HomeService";
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+import {useHistory} from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -35,6 +36,9 @@ const useStyle = makeStyles((theme) => ({
 
 const ModalCart=(props)=>{
 
+    const history = useHistory();
+
+    const[id, setId]=useState('')
     const[image, setImage]=useState('')
     const[name, setName]=useState('')
     const[description, setDescription]=useState('')
@@ -58,6 +62,7 @@ const ModalCart=(props)=>{
         console.log(response)
 
         setImage(response.data.image.data.data)
+        setId(response.data._id)
         setBrand(response.data.brand)
         setCategory(response.data.category)
         setName(response.data.name)
@@ -83,6 +88,31 @@ const ModalCart=(props)=>{
     const handlePlus = () => {
         setCountCart((prevCount) => (prevCount < 100 ? prevCount + 1 : 100));
     };
+
+    const handleCart=async ()=>{
+        var price;
+        if (discount !== 0){
+            price = unitPrice*(100-discount)/100;
+        }else {
+            price =unitPrice;
+        }
+        const cart = {
+            "item_Id": id,
+            "name": name,
+            "brand": brand,
+            "qty": countCart,
+            "unit_price": unitPrice,
+            "total_units_price": price*countCart
+        }
+
+        const response = await HomeService.saveCart(cart);
+
+        if (response.status === 200){
+            history.push({
+                pathname:'/cart'
+            });
+        }
+    }
 
     return(
 
@@ -126,7 +156,7 @@ const ModalCart=(props)=>{
                     <h2 style={{color:'darkslategray',marginBottom:16}}>{name}</h2>
                     <p><span style={{color:'darkslategray'}}>Brand : </span>{brand}</p>
                     <h5>{volume+" "+unitOfVolume}</h5>
-                    <h3 style={{display:'inline', fontWeight:'bolder',color:'cadetblue',marginTop:5}}>{"Rs: "+unitPrice+".00"}</h3>
+                    <h3 style={{display:'inline', fontWeight:'bolder',color:'cadetblue',marginTop:10}}>{"Rs: "+unitPrice+".00"}</h3>
                     {discount !== 0 ? <h5 className="block rounded font-bold uppercase" style={{width:'fit-content',padding:7,fontWeight:600,color:'mediumaquamarine',background:'mintcream',display:'inline',marginLeft:14}}>{discount+"% OFF"}</h5> : null}
                     <div className="input-group product-qty">
                         <IconButton aria-label="minus" onClick={handleMinus}>
@@ -146,7 +176,7 @@ const ModalCart=(props)=>{
                         </IconButton>
                     </div>
                     <div>
-                        <Button size='large' fullWidth variant="outlined" style={{marginBottom:14,marginTop:14,height:50,borderColor:"transparent",color:"white",backgroundColor:'mediumturquoise',boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'}} startIcon={<ShoppingBagOutlinedIcon/>}>
+                        <Button size='large' fullWidth variant="outlined" style={{marginBottom:14,marginTop:14,height:50,borderColor:"transparent",color:"white",backgroundColor:'mediumturquoise',boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'}} startIcon={<ShoppingBagOutlinedIcon/>} onClick={handleCart}>
                             Add To Cart
                         </Button>
                     </div>
