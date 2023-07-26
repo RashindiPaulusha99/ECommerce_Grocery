@@ -39,6 +39,21 @@ class ProductService {
         })
         return await promise
     }
+
+    fetchItem = async (id) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/item/get/'+id,{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    
 }
 
 export default new ProductService();

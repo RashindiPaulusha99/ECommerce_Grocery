@@ -305,6 +305,19 @@ h1,h2,h3,h4,h5,h6 {
 /*----------------------------------------------*/
 /* 6. SITE STRUCTURE */
 /*----------------------------------------------*/
+
+.nav{
+  cursor: pointer;
+}
+
+.nav:hover{
+  border-bottom: 3px solid #ec9b22;
+}
+
+.navImage{
+  padding-right: 11px;
+  width: 35px;
+}
 /* 6.1 Header
 --------------------------------------------------------------*/
 /* Preloader */
@@ -586,7 +599,7 @@ h1,h2,h3,h4,h5,h6 {
   padding: 16px;
   background: #FFFFFF;
   border: 1px solid #FBFBFB;
-  box-shadow: 0 5px 22px rgba(0, 0, 0, 0.04);
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
   border-radius: 16px;
   margin-bottom: 20px;
   transition: box-shadow 0.3s ease-out;
@@ -597,11 +610,11 @@ h1,h2,h3,h4,h5,h6 {
 .product-item h3 {
   display: block;
   width: 100%;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 18px;
   line-height: 25px;
   text-transform: capitalize;
-  color: #333333;
+  color: #5b6670;
   margin: 0;
 }
 .product-item figure {
@@ -615,7 +628,7 @@ h1,h2,h3,h4,h5,h6 {
 }
 .product-item .btn-wishlist {
   position: absolute;
-  top: 20px;
+  bottom: 20px;
   right: 20px;
   width: 50px;
   height: 50px;
@@ -626,9 +639,11 @@ h1,h2,h3,h4,h5,h6 {
   background: #fff;
   border: 1px solid #d8d8d8;
   transition: all 0.3s ease-out;
+  background: rgb(56, 240, 166);
+  color: #fff;
 }
 .product-item .btn-wishlist:hover {
-  background: rgb(240, 56, 56);
+  background: rgb(236, 228, 82);
   color: #fff;
 }
 .product-item .qty {
@@ -682,6 +697,10 @@ h1,h2,h3,h4,h5,h6 {
   border-radius: 6px;
   color: #222;
   padding: 0;
+}
+
+.paginate{
+  text-align: center;
 }
 
 .bgPattern2{

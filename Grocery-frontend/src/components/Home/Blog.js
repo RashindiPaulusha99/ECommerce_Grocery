@@ -1,7 +1,9 @@
 import React from "react";
-import postThumb1 from "../../assets/images/post-thumb-1.jpg";
-import postThumb2 from "../../assets/images/post-thumb-2.jpg";
-import postThumb3 from "../../assets/images/post-thumb-3.jpg";
+import postThumb1 from "../../assets/images/blogs/iStock-1214541379-scaled.jpg";
+import postThumb2 from "../../assets/images/blogs/5c4670410525e.image.jpg";
+import postThumb3 from "../../assets/images/blogs/Silverlake_1531_1500x1000px.jpg";
+import postThumb4 from "../../assets/images/blogs/Food-Grocery-Vegetables-1140771380.jpg";
+import postThumb5 from "../../assets/images/blogs/AdobeStock_97902007-scaled.jpeg";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -54,7 +56,7 @@ const Blog=()=>{
                                     </div>
                                     <div className="post-header">
                                         <h3 className="post-title">
-                                            <a href="#" className="text-decoration-none">Top 10 casual look ideas to dress up your kids</a>
+                                            <a href="#" className="text-decoration-none">Get The Fresh & Best Groceries Delivered</a>
                                         </h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipi elit. Aliquet eleifend viverra enim tincidunt donec quam. A in arcu, hendrerit neque dolor morbi...</p>
                                     </div>
@@ -75,7 +77,7 @@ const Blog=()=>{
                                     </div>
                                     <div className="post-header">
                                         <h3 className="post-title">
-                                            <a href="#" className="text-decoration-none">Latest trends of wearing street wears supremely</a>
+                                            <a href="#" className="text-decoration-none">Everything You Need For Delicious Meal</a>
                                         </h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipi elit. Aliquet eleifend viverra enim tincidunt donec quam. A in arcu, hendrerit neque dolor morbi...</p>
                                     </div>
@@ -96,7 +98,7 @@ const Blog=()=>{
                                     </div>
                                     <div className="post-header">
                                         <h3 className="post-title">
-                                            <a href="#" className="text-decoration-none">10 Different Types of comfortable clothes ideas for women</a>
+                                            <a href="#" className="text-decoration-none">Profitable, Personalized Shopping Without The Headaches</a>
                                         </h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipi elit. Aliquet eleifend viverra enim tincidunt donec quam. A in arcu, hendrerit neque dolor morbi...</p>
                                     </div>
@@ -107,7 +109,7 @@ const Blog=()=>{
                             <article className="post-item card border-0 shadow-sm p-3">
                                 <div className="image-holder zoom-effect">
                                     <a href="#">
-                                        <img src={postThumb1} alt="post" className="card-img-top"/>
+                                        <img src={postThumb4} alt="post" className="card-img-top"/>
                                     </a>
                                 </div>
                                 <div className="card-body">
@@ -117,7 +119,7 @@ const Blog=()=>{
                                     </div>
                                     <div className="post-header">
                                         <h3 className="post-title">
-                                            <a href="#" className="text-decoration-none">Top 10 casual look ideas to dress up your kids</a>
+                                            <a href="#" className="text-decoration-none">Wake Up Early , Eat Fresh & Healthy</a>
                                         </h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipi elit. Aliquet eleifend viverra enim tincidunt donec quam. A in arcu, hendrerit neque dolor morbi...</p>
                                     </div>
@@ -128,7 +130,7 @@ const Blog=()=>{
                             <article className="post-item card border-0 shadow-sm p-3">
                                 <div className="image-holder zoom-effect">
                                     <a href="#">
-                                        <img src={postThumb2} alt="post" className="card-img-top"/>
+                                        <img src={postThumb5} alt="post" className="card-img-top"/>
                                     </a>
                                 </div>
                                 <div className="card-body">
@@ -138,7 +140,7 @@ const Blog=()=>{
                                     </div>
                                     <div className="post-header">
                                         <h3 className="post-title">
-                                            <a href="#" className="text-decoration-none">Latest trends of wearing street wears supremely</a>
+                                            <a href="#" className="text-decoration-none">Make Healthy Life With Fresh Grocery Products</a>
                                         </h3>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipi elit. Aliquet eleifend viverra enim tincidunt donec quam. A in arcu, hendrerit neque dolor morbi...</p>
                                     </div>

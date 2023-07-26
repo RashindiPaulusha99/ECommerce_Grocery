@@ -43,6 +43,34 @@ class HomeService {
         })
         return await promise
     }
+    
+    fetchItems = async (status)=>{
+
+        const promise = new Promise((resolve, reject) =>{
+
+            axios.get('/item/getAll/'+status,{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    fetchItem = async (id) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/item/get/'+id,{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
 }
 
 export default new HomeService();

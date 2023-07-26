@@ -25,10 +25,22 @@ const itemSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    volume:{
+        type:Number,
+        required:true
+    },
+    unit_of_volume:{
+        type:String,
+        required:true
+    },
     unit_price:{
         type:Number,
         required:true
     },
+    image:{
+        data: Buffer,
+        contentType: String
+    }
 })
 
 module.exports = mongoose.model('Item',itemSchema)

@@ -1,11 +1,4 @@
 import React, {useEffect, useState} from "react";
-import productThumb11 from "../../assets/images/product-thumb-11.jpg";
-import productThumb12 from "../../assets/images/product-thumb-12.jpg";
-import productThumb13 from "../../assets/images/product-thumb-13.jpg";
-import productThumb14 from "../../assets/images/product-thumb-14.jpg";
-import Grid from "@mui/material/Grid";
-import vegetables_broccoli from "../../assets/images/icon-vegetables-broccoli.png";
-import Box from "@mui/material/Box";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import HomeService from "../../Services/HomeService";

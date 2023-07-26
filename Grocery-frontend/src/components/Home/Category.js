@@ -1,12 +1,4 @@
 import React, {Fragment, useEffect, useState} from "react";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import vegetables_broccoli from '../../assets/images/icon-vegetables-broccoli.png';
-import bread_baguette from '../../assets/images/icon-bread-baguette.png';
-import bread_herb_flour from '../../assets/images/icon-bread-herb-flour.png';
-import wine_glass_bottle from '../../assets/images/icon-wine-glass-bottle.png';
-import animal_products_drumsticks from '../../assets/images/icon-animal-products-drumsticks.png';
-import soft_drink_bottle from '../../assets/images/icon-soft-drinks-bottle.png';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import HomeService from "../../Services/HomeService";

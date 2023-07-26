@@ -11,6 +11,8 @@ app.use(cors());
 router.post('/register',async (req,res) => {
     const user = new User({
         name:req.body.name,
+        contact:req.body.contact,
+        address:req.body.address,
         email:req.body.email,
         password:req.body.password,
         addedDate:req.body.addedDate,
@@ -52,17 +54,16 @@ router.get('/login/:email/:password',async (req, res) =>{
     }
 })
 
-/*router.put('/:id',async (req,res) =>{
+router.put('/update/:id',async (req,res) =>{
     try {
-        const register = await User.findById(req.params.id)
-        register.firstName = req.body.firstName
-        register.surname = req.body.surname
-        register.gender = req.body.gender
-        register.dateOfBirth = req.body.dateOfBirth
-        register.password = req.body.password
-        register.phoneNumber = req.body.phoneNumber
-        register.email = req.body.email
-        const response = await register.save()
+        const get = await User.findById(req.params.id)
+        get.name = req.body.name
+        get.contact = req.body.contact
+        get.address = req.body.address
+        get.email = req.body.email
+        get.password = req.body.password
+        get.addedDate = req.body.addedDate
+        const response = await get.save()
 
         res.json(response)
     }catch (error) {
@@ -70,15 +71,15 @@ router.get('/login/:email/:password',async (req, res) =>{
     }
 })
 
-router.delete('/:id',async (req,res) =>{
+router.delete('/delete/:id',async (req,res) =>{
     try {
-        const register = await User.findById(req.params.id)
-        const response = await register.remove()
+        const get = await User.findById(req.params.id)
+        const response = await get.remove()
         res.json(response)
     }catch (error) {
         res.send('Error : '+error)
     }
-})*/
+})
 
 module.exports = router
 
