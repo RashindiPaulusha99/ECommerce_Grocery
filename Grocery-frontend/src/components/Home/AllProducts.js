@@ -29,12 +29,16 @@ const AllProducts=()=>{
         });*/}
     }
 
+    const Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
+
       const [open, setOpen] = React.useState(false);
       const [id, setId] = React.useState("");
 
   const handleClickOpen =async (e) => {
-    const response  = await HomeService.fetchItem(e);
-    setId(response.data)
+    //const response  = await HomeService.fetchItem(e);
+    setId(e)
     setOpen(true);
   };
 
@@ -93,14 +97,6 @@ const AllProducts=()=>{
         bytes.forEach((b) => binary += String.fromCharCode(b));
         return window.btoa(binary);
     };
-
-    const handleMinus=(_id)=>{
-        setCountCart((prevCount) => (prevCount - 1));
-    }
-
-    const handlePlus=(_id)=>{
-        setCountCart((prevCount) => (prevCount + 1));
-    }
 
     return(
         <section className="py-5">
@@ -177,7 +173,7 @@ const AllProducts=()=>{
                 </div>
             </div>
 
-            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id}/> : null}
+            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} /> : null}
         </section>
     )
 }

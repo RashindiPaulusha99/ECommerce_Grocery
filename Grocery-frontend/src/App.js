@@ -4,7 +4,8 @@ import NotFoundIndex from "./pages/NotFoundIndex";
 import Home from "./pages/Home";
 import Profile from "./components/Home/Profile";
 import AddToCart from "./components/cart/AddToCart";
-import Cart from "./components/Home/Cart";
+import Login from "./components/Home/Login";
+import Cart from "./components/cart/Cart";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
             <Home/>
         </Route>
           <Route path='/login'>
-
+                <Login/>
           </Route>
           <Route path='/profile'>
               <Profile/>

@@ -8,7 +8,6 @@ import Category from "../components/Home/Category";
 import NewlyArrivedBrands from "../components/Home/NewlyArrivedBrands";
 import HeaderBanner from "../components/Home/HeaderBanner";
 import MiddleBanners from "../components/Home/MiddleBanners";
-import Cart from "../components/Home/Cart";
 import Form from "../components/Home/Form";
 import Preloader from "../components/Home/Preloader";
 import HeaderIcons from "../components/Home/HeaderIcons";
@@ -29,7 +28,6 @@ const Home=()=>{
         <Fragment>
             <HeaderIcons/>
             {/*<Preloader/>*/}
-            <Cart/>
             <Search/>
             <Header/>
             <HeaderBanner/>

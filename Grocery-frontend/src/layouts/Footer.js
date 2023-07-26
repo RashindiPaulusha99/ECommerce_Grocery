@@ -137,7 +137,7 @@ const Footer=()=>{
                                 <h5 className="widget-title" style={{color:'black'}}>Subscribe Us</h5>
                                 <p>Subscribe to our newsletter to get updates about our grand offers.</p>
                                 <form className=" mt-3 " role="newsletter">
-                                    <FormControl sx={{ m: 1, width: '35ch' }} variant="outlined">
+                                    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
                                         <InputLabel htmlFor="outlined-adornment-email">Write your email</InputLabel>
                                         <OutlinedInput
                                             id="outlined-adornment-email"

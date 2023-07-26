@@ -1,22 +1,37 @@
 import React from "react";
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { useEffect } from "react";
-import homeService from "../../Services/HomeService";
 import { useState } from "react";
 import Chip from '@mui/material/Chip';
 import '../../assets/css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import { Button } from "@mui/material";
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import TextField from '@mui/material/TextField';
+import HomeService from "../../Services/HomeService";
+import { makeStyles } from "@material-ui/core/styles";
+import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
+
+const useStyle = makeStyles((theme) => ({
+    root: {
+
+        "& .MuiOutlinedInput-notchedOutline":{
+            borderColor:'transparent'
+        },
+        "& .MuiOutlinedInput-input":{
+            textAlign:'center'
+        }
+    }
+}));
 
 const ModalCart=(props)=>{
 
@@ -32,25 +47,27 @@ const ModalCart=(props)=>{
     const[unitPrice, setUnitPrice]=useState(0)
     const [countCart, setCountCart] = useState(1);
 
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-      });
+    const style = useStyle();
 
     useEffect(()=>{
-        console.log(props.id);
-        setImage(props.id.image.data.data)
-        setBrand(props.id.brand)
-        setCategory(props.id.category)
-        setName(props.id.name)
-        setDescription(props.id.description)
-        setQtyOnHand(props.id.qty_on_hand)
-        setVolume(props.id.volume)
-        setUnitOfVolume(props.id.unit_of_volume)
-        setUnitPrice(props.id.unit_price)
-        setDiscount(props.id.discount)
-        
+        test(props.id)
     },[])
 
+    const test=async (e)=>{
+        const response  = await HomeService.fetchItem(e);
+        console.log(response)
+
+        setImage(response.data.image.data.data)
+        setBrand(response.data.brand)
+        setCategory(response.data.category)
+        setName(response.data.name)
+        setDescription(response.data.description)
+        setQtyOnHand(response.data.qty_on_hand)
+        setVolume(response.data.volume)
+        setUnitOfVolume(response.data.unit_of_volume)
+        setUnitPrice(response.data.unit_price)
+        setDiscount(response.data.discount)
+    }
     
     const arrayBufferToBase64 = (buffer) => {
         var binary = '';
@@ -59,13 +76,13 @@ const ModalCart=(props)=>{
         return window.btoa(binary);
     };
 
-    const handleMinus=(_id)=>{
-        setCountCart((prevCount) => (prevCount - 1));
-    }
+    const handleMinus = () => {
+        setCountCart((prevCount) => (prevCount > 1 ? prevCount - 1 : 1));
+    };
 
-    const handlePlus=(_id)=>{
-        setCountCart((prevCount) => (prevCount + 1));
-    }
+    const handlePlus = () => {
+        setCountCart((prevCount) => (prevCount < 100 ? prevCount + 1 : 100));
+    };
 
     return(
 
@@ -73,7 +90,7 @@ const ModalCart=(props)=>{
         fullWidth
         maxWidth={'lg'}
         open={props.open}
-        TransitionComponent={Transition}
+        TransitionComponent={props.Transition}
         keepMounted
         onClose={props.handleClose}
         aria-describedby="alert-dialog-slide-description"
@@ -106,31 +123,40 @@ const ModalCart=(props)=>{
                 </div>
                 </Grid>
                 <Grid item xs={12} md={6} lg={6}>
-                    <h2 style={{color:'darkslategray'}}>{name}</h2>
+                    <h2 style={{color:'darkslategray',marginBottom:16}}>{name}</h2>
+                    <p><span style={{color:'darkslategray'}}>Brand : </span>{brand}</p>
                     <h5>{volume+" "+unitOfVolume}</h5>
-                    <h3 style={{display:'inline', fontWeight:'bolder',color:'black'}}>{"Rs: "+unitPrice+".00"}</h3>
+                    <h3 style={{display:'inline', fontWeight:'bolder',color:'cadetblue',marginTop:5}}>{"Rs: "+unitPrice+".00"}</h3>
                     {discount !== 0 ? <h5 className="block rounded font-bold uppercase" style={{width:'fit-content',padding:7,fontWeight:600,color:'mediumaquamarine',background:'mintcream',display:'inline',marginLeft:14}}>{discount+"% OFF"}</h5> : null}
-                    
                     <div className="input-group product-qty">
-                                                                    <span className="input-group-btn">
-                                                                        <button type="button" className="quantity-left-minus btn btn-danger btn-number" datatype="minus" data-field="" onClick={() => handleMinus()}>
-                                                                            <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                                                                        </button>
-                                                                    </span>
-                                                                    <input type="text" id="quantity" name="quantity" className="form-control input-number" value={countCart} min="1" max="100"/>
-                                                                    <span className="input-group-btn">
-                                                                        <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="" onClick={() => handlePlus()}>
-                                                                            <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                                                                        </button>
-                                                                    </span>
-                                                                </div>
-                    <h6 style={{display:'inline-flex',}}>
-                        <LocalOfferOutlinedIcon style={{transform: 'scaleX(-1)',marginRight:5}}/>
+                        <IconButton aria-label="minus" onClick={handleMinus}>
+                            <RemoveIcon />
+                        </IconButton>
+                        <TextField
+                            className={style.root}
+                            sx={{width: '10ch',borderColor:'transparent'}}
+                            id="outlined-size-small"
+                            type="text"
+                            value={countCart}
+                            size="small"
+                            readonly
+                        />
+                        <IconButton aria-label="plus" onClick={handlePlus}>
+                            <AddIcon />
+                        </IconButton>
+                    </div>
+                    <div>
+                        <Button size='large' fullWidth variant="outlined" style={{marginBottom:14,marginTop:14,height:50,borderColor:"transparent",color:"white",backgroundColor:'mediumturquoise',boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'}} startIcon={<ShoppingBagOutlinedIcon/>}>
+                            Add To Cart
+                        </Button>
+                    </div>
+                    <h6 style={{display:'inline-flex',color:'darkslategray'}}>
                         Tags : 
                     </h6>
-                    <Chip label="Local" style={{display:'inline-flex',}}/>
-                    <Chip label={category} color="success" variant="outlined" style={{display:'inline-flex',}}/>
-                    <Chip label={brand} color="success" variant="outlined" style={{display:'inline-flex',}}/>
+                    <Chip label="Local" style={{display:'inline-flex',backgroundColor:'paleturquoise',margin:6,}}/>
+                    <Chip label={category}  style={{display:'inline-flex',backgroundColor:'paleturquoise',margin:6}}/>
+                    <p style={{color:'darkslategray',marginTop:14,}}>Product Details :</p>
+                    <p>{description}</p>
                 </Grid>
             </Grid>
         </Box>

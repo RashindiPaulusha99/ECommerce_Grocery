@@ -1,6 +1,35 @@
 import React from "react";
+import Drawer from "@mui/material/Drawer";
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import '../../assets/css/style.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from '@mui/material/Button';
+import Cart from "../cart/Cart";
+import {useHistory} from "react-router-dom";
 
 const HeaderIcons=()=>{
+
+    const history = useHistory();
+
+    const handleCart=()=>{
+        history.push({
+            pathname:'/login'
+        });
+    }
+
+    const handleProfile=()=>{
+        history.push({
+            pathname:'/profile'
+        });
+    }
 
     return(
         <div>
@@ -27,7 +56,7 @@ const HeaderIcons=()=>{
                     <symbol xmlns="http://www.w3.org/2000/svg" id="minus" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M19 11H5a1 1 0 0 0 0 2h14a1 1 0 0 0 0-2Z"/>
                     </symbol>
-                    <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24">
+                    <symbol xmlns="http://www.w3.org/2000/svg" id="cart" viewBox="0 0 24 24" onClick={handleCart}>
                         <path fill="currentColor" d="M8.5 19a1.5 1.5 0 1 0 1.5 1.5A1.5 1.5 0 0 0 8.5 19ZM19 16H7a1 1 0 0 1 0-2h8.491a3.013 3.013 0 0 0 2.885-2.176l1.585-5.55A1 1 0 0 0 19 5H6.74a3.007 3.007 0 0 0-2.82-2H3a1 1 0 0 0 0 2h.921a1.005 1.005 0 0 1 .962.725l.155.545v.005l1.641 5.742A3 3 0 0 0 7 18h12a1 1 0 0 0 0-2Zm-1.326-9l-1.22 4.274a1.005 1.005 0 0 1-.963.726H8.754l-.255-.892L7.326 7ZM16.5 19a1.5 1.5 0 1 0 1.5 1.5a1.5 1.5 0 0 0-1.5-1.5Z"/>
                     </symbol>
                     <symbol xmlns="http://www.w3.org/2000/svg" id="check" viewBox="0 0 24 24">
@@ -45,7 +74,7 @@ const HeaderIcons=()=>{
                     <symbol xmlns="http://www.w3.org/2000/svg" id="search" viewBox="0 0 24 24">
                         <path fill="currentColor" d="M21.71 20.29L18 16.61A9 9 0 1 0 16.61 18l3.68 3.68a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.39ZM11 18a7 7 0 1 1 7-7a7 7 0 0 1-7 7Z"/>
                     </symbol>
-                    <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24">
+                    <symbol xmlns="http://www.w3.org/2000/svg" id="user" viewBox="0 0 24 24" onClick={handleProfile}>
                         <path fill="currentColor" d="M15.71 12.71a6 6 0 1 0-7.42 0a10 10 0 0 0-6.22 8.18a1 1 0 0 0 2 .22a8 8 0 0 1 15.9 0a1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1a10 10 0 0 0-6.25-8.19ZM12 12a4 4 0 1 1 4-4a4 4 0 0 1-4 4Z"/>
                     </symbol>
                     <symbol xmlns="http://www.w3.org/2000/svg" id="close" viewBox="0 0 15 15">
@@ -53,6 +82,7 @@ const HeaderIcons=()=>{
                     </symbol>
                 </defs>
             </svg>
+
         </div>
     )
 }

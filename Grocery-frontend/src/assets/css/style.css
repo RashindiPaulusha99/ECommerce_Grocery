@@ -676,6 +676,13 @@ h1,h2,h3,h4,h5,h6 {
 .product-item .product-qty {
   width: 85px;
 }
+.input-group{
+  padding: 9px;
+  justify-content: space-evenly;
+  background: lavender;
+  border-radius: 30px;
+  margin-top: 20px;
+}
 .product-item .btn-link {
   text-decoration: none;
 }
