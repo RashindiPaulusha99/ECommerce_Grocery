@@ -13,7 +13,6 @@ import { useState } from "react";
 import Chip from '@mui/material/Chip';
 import '../../assets/css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import TextField from '@mui/material/TextField';

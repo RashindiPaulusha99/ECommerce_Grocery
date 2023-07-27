@@ -81,6 +81,19 @@ class HomeService {
         })
         return await promise
     }
+
+    deleteCart = async (id) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.delete('/cart/delete/'+id,{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
 }
 
 export default new HomeService();

@@ -1,31 +1,18 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
-import { styled, lighten, darken } from '@mui/system';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import Button from '@mui/material/Button';
 import ReorderIcon from '@mui/icons-material/Reorder';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 import grocery from "../assets/images/grocery.jpg";
-import Drawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import ListItemText from "@mui/material/ListItemText";
-import Cart from "../components/cart/Cart";
 import CategoryMenu from "../components/common/CategoryMenu";
 import ProfileMenu from "../components/common/ProfileMenu";
-
 
 const Header=()=>{
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorEl2, setAnchorEl2] = React.useState(null);
+
     const history = useHistory();
 
     const opens = Boolean(anchorEl);
