@@ -41,6 +41,8 @@ const ModalCart=(props)=>{
     const[id, setId]=useState('')
     const[image, setImage]=useState('')
     const[name, setName]=useState('')
+    const[email, setEmail]=useState('')
+    const[password, setPassword]=useState('')
     const[description, setDescription]=useState('')
     const[category, setCategory]=useState('')
     const[qtyOnHand, setQtyOnHand]=useState(0)
@@ -55,11 +57,12 @@ const ModalCart=(props)=>{
 
     useEffect(()=>{
         test(props.id)
+        setEmail(props.email)
+        setPassword(props.password)
     },[])
 
     const test=async (e)=>{
         const response  = await HomeService.fetchItem(e);
-        console.log(response)
 
         setImage(response.data.image.data.data)
         setId(response.data._id)
@@ -106,8 +109,12 @@ const ModalCart=(props)=>{
             "total_units_price": price * countCart
         };
 
+        const temp={
+            "email":email,
+            "password":password
+        }
+
         const carts = await HomeService.getCart(cart);
-        console.log(carts.data);
 
         if (carts.data.length !== 0) {
             let itemFound = false;
@@ -125,8 +132,10 @@ const ModalCart=(props)=>{
 
                     if (response.status === 200) {
                         itemFound = true;
+
                         history.push({
-                            pathname: '/cart'
+                            pathname: '/cart',
+                            state: temp
                         });
                         break;
                     }
@@ -138,7 +147,8 @@ const ModalCart=(props)=>{
 
                 if (response.status === 200) {
                     history.push({
-                        pathname: '/cart'
+                        pathname: '/cart',
+                        state: temp
                     });
                 }
             }
@@ -147,7 +157,8 @@ const ModalCart=(props)=>{
 
             if (response.status === 200) {
                 history.push({
-                    pathname: '/cart'
+                    pathname: '/cart',
+                    state: temp
                 });
             }
         }

@@ -11,16 +11,11 @@ import IconButton from '@mui/material/IconButton';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
-import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import { withRouter } from 'react-router-dom';
+import {useHistory, withRouter} from 'react-router-dom';
 import Button from "@mui/material/Button";
-import Snackbar from '@mui/material/Snackbar';
-import Alert from '@mui/material/Alert';
 import HomeService from "../../Services/HomeService";
+import SnackBar from "./SnackBar";
 
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -63,6 +58,8 @@ const Payment=(props)=>{
     const [expanded, setExpanded] = useState('panel1');
     const [total, setTotal] = useState(0);
     const [items, setItems] = useState([]);
+    const [password, setPassword] = useState('');
+    const [userEmail, setUserEmail] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [province, setProvince] = useState('');
@@ -75,6 +72,11 @@ const Payment=(props)=>{
     const [expiryYear, setExpiryYear] = useState('');
     const [cardHolderName, setCardHolderName] = useState('');
     const [securityCode, setSecurityCode] = useState('');
+    const [state, setState] = useState(false);
+    const [severity, setSeverity] = useState('warning');
+    const [message, setMessage] = useState('All fields are required!');
+
+    const history = useHistory();
 
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
@@ -83,13 +85,9 @@ const Payment=(props)=>{
     useEffect(()=>{
         setTotal(props.location.state.total)
         setItems(props.location.state.items)
+        setUserEmail(props.location.state.email)
+        setPassword(props.location.state.password)
     })
-
-    const [state, setState] = useState(false);
-    const [vertical, setVertical ]= useState('top');
-    const [horizontal, setHorizontal] = useState('right');
-    const [severity, setSeverity] = useState('warning');
-    const [message, setMessage] = useState('All fields are required!');
 
     const handleClick = () => {
         setState(true);
@@ -116,24 +114,49 @@ const Payment=(props)=>{
             // Format the date as a string in the desired format (e.g., DD/MM/YYYY)
             const formattedDate = `${day}-${month}-${year}`;
 
-            const data = {
-                "user_Id":"",
-                "cart":items,
-                "payments":total,
-                "payment_Date":formattedDate
-            }
+            const user = await HomeService.getUser(userEmail,password);
 
-            const response  = await HomeService.savePayment(data)
+            if (user.status === 200 ){
+                const data = {
+                    "user_Id":user.data._id,
+                    "cart":items,
+                    "payments":total,
+                    "payment_Date":formattedDate
+                }
 
-            if (response.status === 200){
-                setSeverity("success")
-                setMessage("Payment Successfully!")
-                handleClick()
+                const temp={
+                    "email":email,
+                    "password":password
+                }
+
+                const response  = await HomeService.savePayment(data)
+
+                if (response.status === 200){
+                    setSeverity("success")
+                    setMessage("Payment Successfully!")
+                    handleClick()
+                    deleteCart(response.data)
+                    history.push({
+                        pathname:'/response',
+                        state: temp
+                    });
+                }else {
+                    setSeverity("error")
+                    setMessage("Payment Failed!")
+                    handleClick()
+                }
             }else {
                 setSeverity("error")
                 setMessage("Payment Failed!")
                 handleClick()
             }
+        }
+    }
+
+    const deleteCart=async (items)=>{
+        console.log(items)
+        for (var itemsKey in items) {
+            const response = await HomeService.deleteCart(itemsKey._id)
         }
     }
 
@@ -339,11 +362,7 @@ const Payment=(props)=>{
                 </Accordion>
             </div>
 
-            <Snackbar open={state} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical, horizontal }} key={'top' + 'right'}>
-                <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-                    {message}
-                </Alert>
-            </Snackbar>
+            <SnackBar state={state} handleClose={handleClose} message={message} severity={severity}/>
 
         </Fragment>
     )

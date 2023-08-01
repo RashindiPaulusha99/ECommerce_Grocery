@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect,useState} from "react";
 import { useHistory } from "react-router-dom";
 import Button from '@mui/material/Button';
 import ReorderIcon from '@mui/icons-material/Reorder';
@@ -9,16 +9,20 @@ import CategoryMenu from "../components/common/CategoryMenu";
 import ProfileMenu from "../components/common/ProfileMenu";
 import HomeService from "../Services/HomeService";
 
-const Header=()=>{
+const Header=(props)=>{
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [anchorEl2, setAnchorEl2] = React.useState(null);
-    const [cart, setCart] = React.useState(0);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl2, setAnchorEl2] = useState(null);
+    const [cart, setCart] = useState(0);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const history = useHistory();
 
     useEffect(()=>{
         handleCartSize();
+        setEmail(props.email)
+        setPassword(props.password)
     })
 
     const opens = Boolean(anchorEl);
@@ -41,14 +45,28 @@ const Header=()=>{
     };
 
     const handleCart=()=>{
+
+        const temp={
+            "email":email,
+            "password":password
+        }
+
         history.push({
-            pathname:'/cart'
+            pathname:'/cart',
+            state: temp
         });
     }
 
     const  handleOpenHome=()=>{
+
+        const temp={
+            "email":email,
+            "password":password
+        }
+
         history.push({
-            pathname:'/home'
+            pathname:'/home',
+            state: temp
         });
     }
 

@@ -15,10 +15,13 @@ import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import DeleteModal from "../common/DeleteModal";
 import {useHistory} from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 
 const Cart = (props) => {
 
     const [id, setId]=useState('')
+    const [email, setEmail]=useState('')
+    const [password, setPassword]=useState('')
     const [posts, setPosts]=useState([])
     const [cartLength, setCartLength] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
@@ -32,6 +35,8 @@ const Cart = (props) => {
 
     useEffect(()=>{
         handleCart();
+        setEmail(props.location.state.email);
+        setPassword(props.location.state.password);
     },[])
 
     const handleCart=async ()=>{
@@ -107,8 +112,15 @@ const Cart = (props) => {
     }, [posts]);
 
     const openHomePage=()=>{
+
+        const temp={
+            "email":email,
+            "password":password
+        }
+
         history.push({
-            pathname:'/home'
+            pathname:'/home',
+            state: temp
         });
     }
 
@@ -116,7 +128,9 @@ const Cart = (props) => {
 
         const temp={
             "total":total,
-            "items":posts
+            "items":posts,
+            "email":email,
+            "password":password
         }
 
         history.push({
@@ -232,4 +246,4 @@ const Cart = (props) => {
     )
 }
 
-export default Cart;
+export default withRouter(Cart);

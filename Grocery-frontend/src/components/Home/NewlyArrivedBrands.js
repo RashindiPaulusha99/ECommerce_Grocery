@@ -58,7 +58,7 @@ const NewlyArrivedBrands=()=>{
                             <h2 className="section-title">Newly Arrived Brands</h2>
 
                             <div className="d-flex align-items-center">
-                                <a href="#g" className="btn-link text-decoration-none">View All Categories →</a>
+                                <a className="btn-link text-decoration-none">View All Categories →</a>
                             </div>
                         </div>
 
@@ -69,30 +69,6 @@ const NewlyArrivedBrands=()=>{
 
                         <div className="brand-carousel swiper">
                             <div className="swiper-wrapper">
-
-                                {/*<Box sx={{ flexGrow: 1 }} >
-                                    <Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }} >
-                                        {currentPosts.map((post) =>(
-                                            <Grid item xs={4} lg={3} md={3}  key={post.id} >
-                                                <div className="swiper-slide">
-                                                    <div className="card mb-3 p-3 rounded-4 shadow border-0">
-                                                        <div className="row g-0">
-                                                            <div className="col-md-4">
-                                                                <img src={productThumb11} className="img-fluid rounded" alt="Card title"/>
-                                                            </div>
-                                                            <div className="col-md-8">
-                                                                <div className="card-body py-0">
-                                                                    <p className="text-muted mb-0">Amber Jar</p>
-                                                                    <h5 className="card-title">{post.title}</h5>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </Grid>
-                                        ))}
-                                    </Grid>
-                                </Box>*/}
 
                                 <Carousel responsive={responsive}>
                                     {posts.map(({_id, brand,category,image}, index) =>(

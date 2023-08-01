@@ -11,10 +11,9 @@ app.use(cors());
 router.post('/register',async (req,res) => {
     const user = new User({
         name:req.body.name,
-        contact:req.body.contact,
-        address:req.body.address,
         email:req.body.email,
         password:req.body.password,
+        role:req.body.role,
         addedDate:req.body.addedDate,
     })
 
@@ -54,14 +53,22 @@ router.get('/login/:email/:password',async (req, res) =>{
     }
 })
 
+router.get('/get/:email/:password',async (req, res) =>{
+    try {
+        const get = await User.findOne({ email: req.params.email, password: req.params.password })
+        res.json(get)
+    }catch (error) {
+        res.send('Error : '+error)
+    }
+})
+
 router.put('/update/:id',async (req,res) =>{
     try {
         const get = await User.findById(req.params.id)
         get.name = req.body.name
-        get.contact = req.body.contact
-        get.address = req.body.address
         get.email = req.body.email
         get.password = req.body.password
+        get.role = req.body.role
         get.addedDate = req.body.addedDate
         const response = await get.save()
 

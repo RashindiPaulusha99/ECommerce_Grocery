@@ -10,7 +10,7 @@ import HomeService from "../../Services/HomeService";
 import Slide from '@mui/material/Slide';
 import ModalCart from "../common/ModalCart";
 
-const AllProducts=()=>{
+const AllProducts=(props)=>{
 
     const [posts, setPosts] = useState([]);
     const [status, setStatus] = useState('All');
@@ -19,42 +19,34 @@ const AllProducts=()=>{
     const [showPreviousButton, setShowPreviousButton] = useState(false);
     const [showNextButton, setShowNextButton] = useState(true);
     const [fullPage, setFullPage] = useState(9);
-    const [countCart, setCountCart] = useState(1);
-
-    const history = useHistory();
-
-    const handleCart=(e)=>{
-        {/*history.push({
-            pathname:'/cart'
-        });*/}
-    }
+    const [open, setOpen] = useState(false);
+    const [id, setId] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
 
-      const [open, setOpen] = React.useState(false);
-      const [id, setId] = React.useState("");
+      const handleClickOpen =async (e) => {
+        setId(e)
+        setOpen(true);
+      };
 
-  const handleClickOpen =async (e) => {
-    //const response  = await HomeService.fetchItem(e);
-    setId(e)
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setId("")
-    setOpen(false);
-  };
+      const handleClose = () => {
+        setId("")
+        setOpen(false);
+      };
 
 
     useEffect(()=>{
         fetchDetails();
+        setEmail(props.email)
+        setPassword(props.password)
     }, []);
 
     const fetchDetails = async()=>{
         const response = await HomeService.fetchItems(status);
-        console.log(response.data)
 
         if (response.status === 200){
             setPosts(response.data);
@@ -173,7 +165,7 @@ const AllProducts=()=>{
                 </div>
             </div>
 
-            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} /> : null}
+            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} email={email} password={password} /> : null}
         </section>
     )
 }

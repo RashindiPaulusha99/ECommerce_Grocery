@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
@@ -15,7 +15,15 @@ import Button from '@mui/material/Button';
 import Cart from "../cart/Cart";
 import {useHistory} from "react-router-dom";
 
-const HeaderIcons=()=>{
+const HeaderIcons=(props)=>{
+
+    const [email,setEmail]=useState('')
+    const [password,setPassword]=useState('')
+
+    useEffect(()=>{
+        setEmail(props.email)
+        setPassword(props.password)
+    })
 
     const history = useHistory();
 

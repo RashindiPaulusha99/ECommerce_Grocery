@@ -58,7 +58,7 @@ const Category=()=>{
                         <h2 className="section-title">Category</h2>
 
                         <div className="d-flex align-items-center">
-                            <a href="#g" className="btn-link text-decoration-none">View All Categories →</a>
+                            <a className="btn-link text-decoration-none">View All Categories →</a>
                         </div>
                     </div>
 
@@ -71,7 +71,7 @@ const Category=()=>{
                         <div className="swiper-wrapper">
                             <Carousel responsive={responsive}>
                                 {posts.map(({_id, category,image}, index) =>(
-                                    <a href="#d" className="nav-link category-item swiper-slide me-3 ms-2" >
+                                    <a className="nav-link category-item swiper-slide me-3 ms-2" >
                                         <img src={'data:image/jpeg;base64,'+arrayBufferToBase64(image.data.data)} alt='icon-bread-baguette'/>
                                         <h3 className="category-title">{category}</h3>
                                     </a>

@@ -131,6 +131,42 @@ class HomeService {
         })
         return await promise
     }
+
+    saveUser = async (data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.post('/user/register',data)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    userLogin = async (email,password) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/user/login/'+email+'/'+password)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    getUser = async (email,password) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/user/get/'+email+'/'+password)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
 }
 
 export default new HomeService();

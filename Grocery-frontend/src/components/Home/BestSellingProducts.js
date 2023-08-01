@@ -9,7 +9,7 @@ import Slide from "@mui/material/Slide";
 import HomeService from "../../Services/HomeService";
 import ModalCart from "../common/ModalCart";
 
-const BestSellingProducts=()=>{
+const BestSellingProducts=(props)=>{
 
     const [status, setStatus] = useState('All');
     const [posts, setPosts] = useState([]);
@@ -18,13 +18,15 @@ const BestSellingProducts=()=>{
     const [showPreviousButton, setShowPreviousButton] = useState(false);
     const [showNextButton, setShowNextButton] = useState(true);
     const [fullPage, setFullPage] = useState(9);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
     });
 
-    const [open, setOpen] = React.useState(false);
-    const [id, setId] = React.useState("");
+    const [open, setOpen] = useState(false);
+    const [id, setId] = useState("");
 
     const handleClickOpen =async (e) => {
         //const response  = await HomeService.fetchItem(e);
@@ -40,11 +42,12 @@ const BestSellingProducts=()=>{
 
     useEffect(()=>{
         fetchDetails();
+        setEmail(props.email)
+        setPassword(props.password)
     }, []);
 
     const fetchDetails = async()=>{
         const response = await HomeService.fetchItems(status);
-        console.log(response.data)
 
         if (response.status === 200){
             setPosts(response.data);
@@ -150,7 +153,7 @@ const BestSellingProducts=()=>{
                     </div>
                 </div>
             </div>
-            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} /> : null}
+            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} email={email} password={password} /> : null}
         </section>
     )
 }
