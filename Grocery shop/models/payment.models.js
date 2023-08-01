@@ -5,10 +5,34 @@ const paymentSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    cart_Id:{
-        type:String,
-        required:true
-    },
+    cart: [
+        {
+            item_Id: {
+                type: String,
+                required: true
+            },
+            name:{
+                type: String,
+                required: true
+            },
+            brand:{
+                type: String,
+                required: true
+            },
+            qty: {
+                type: Number,
+                required: true
+            },
+            unit_price:{
+                type: Number,
+                required: true
+            },
+            total_units_price:{
+                type: Number,
+                required: true
+            }
+        }
+    ],
     payments:{
         type:Number,
         required:true

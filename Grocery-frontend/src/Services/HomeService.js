@@ -119,6 +119,18 @@ class HomeService {
         })
         return await promise
     }
+
+    savePayment = async (data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.post('/payment/save',data)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
 }
 
 export default new HomeService();
