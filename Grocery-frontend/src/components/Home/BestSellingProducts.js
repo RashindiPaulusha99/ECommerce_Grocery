@@ -115,8 +115,8 @@ const BestSellingProducts=(props)=>{
                                 </Box>
                             </div>
                             <div className="swiper-buttons paginate">
-                                {itemsToShow < posts.length && (<Button variant="outlined" size="medium" onClick={handleNextButton} disabled={!showNextButton}>
-                                    Show more
+                                {itemsToShow < posts.length && (<Button variant="contained" size="medium" onClick={handleNextButton} disabled={!showNextButton} style={{backgroundColor:'black'}}>
+                                    load more
                                 </Button>)}
                             </div>
                         </div>

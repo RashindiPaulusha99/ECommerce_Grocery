@@ -167,7 +167,7 @@ const Header=(props)=>{
                                             >
                                                 Categories
                                             </Button>
-                                            <CategoryMenu opens={opens} handleClose={handleClose} anchorEl={anchorEl}/>
+                                            <CategoryMenu opens={opens} handleClose={handleClose} anchorEl={anchorEl} />
    
                                         <ul className="navbar-nav justify-content-end menu-list list-unstyled d-flex gap-md-3 mb-0">
                                             <li className="nav-item active nav" onClick={handleOpenHome}>

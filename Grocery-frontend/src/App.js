@@ -8,6 +8,7 @@ import Cart from "./components/cart/Cart";
 import Payment from "./components/common/Payment";
 import Register from "./components/Login/Register";
 import PaymentResponse from "./components/common/PaymentResponse";
+import Products from "./components/Home/Products";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route path='/payment'>
               <Payment/>
+          </Route>
+          <Route path='/products'>
+              <Products/>
           </Route>
           <Route path='/response'>
               <PaymentResponse/>

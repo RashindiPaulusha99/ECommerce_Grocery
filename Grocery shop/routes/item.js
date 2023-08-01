@@ -84,10 +84,16 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     }
 })
 
-router.get('/getAll/All',async (req, res) =>{
+router.get('/getAll/:status',async (req, res) =>{
     try {
-        const get = await Item.find()
-        res.json(get)
+        console.log(req.params.status)
+        if (req.params.status === "All") {
+            const get = await Item.find()
+            res.json(get)
+        }else{
+            const get = await Item.find({ category: req.params.status }); // Use find with a filter for the Milk category
+            res.json(get);
+        }
     }catch (error) {
         res.send('Error : '+error)
     }
