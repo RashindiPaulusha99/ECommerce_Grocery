@@ -105,13 +105,9 @@ const Payment=(props)=>{
         }else {
 
             const currentDate = new Date();
-
-            // Extract the date, month, and year from the current date
             const day = currentDate.getDate();
-            const month = currentDate.getMonth() + 1; // Month is zero-based, so add 1
+            const month = currentDate.getMonth() + 1;
             const year = currentDate.getFullYear();
-
-            // Format the date as a string in the desired format (e.g., DD/MM/YYYY)
             const formattedDate = `${day}-${month}-${year}`;
 
             const user = await HomeService.getUser(userEmail,password);
@@ -154,8 +150,7 @@ const Payment=(props)=>{
     }
 
     const deleteCart=async (items)=>{
-        console.log(items)
-        for (var itemsKey in items) {
+        for (var itemsKey of items.cart) {
             const response = await HomeService.deleteCart(itemsKey._id)
         }
     }

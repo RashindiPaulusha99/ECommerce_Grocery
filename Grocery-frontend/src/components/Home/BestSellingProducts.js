@@ -8,16 +8,14 @@ import vegetables_broccoli from "../../assets/images/icon-vegetables-broccoli.pn
 import Slide from "@mui/material/Slide";
 import HomeService from "../../Services/HomeService";
 import ModalCart from "../common/ModalCart";
+import Button from "@mui/material/Button";
 
 const BestSellingProducts=(props)=>{
 
     const [status, setStatus] = useState('All');
     const [posts, setPosts] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [postPerPage, setPostPerPage] = useState(10);
-    const [showPreviousButton, setShowPreviousButton] = useState(false);
     const [showNextButton, setShowNextButton] = useState(true);
-    const [fullPage, setFullPage] = useState(9);
+    const [itemsToShow, setItemsToShow] = useState(10);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -29,7 +27,6 @@ const BestSellingProducts=(props)=>{
     const [id, setId] = useState("");
 
     const handleClickOpen =async (e) => {
-        //const response  = await HomeService.fetchItem(e);
         setId(e)
         setOpen(true);
     };
@@ -51,38 +48,11 @@ const BestSellingProducts=(props)=>{
 
         if (response.status === 200){
             setPosts(response.data);
-            setShowPreviousButton(false);
         }
     }
 
-
-    const indexOfLastPost = currentPage * postPerPage;
-    const indexOfFirstPost = indexOfLastPost - postPerPage;
-    const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
-
     const handleNextButton = (event, value) => {
-        setCurrentPage(currentPage+1);
-
-        if(currentPage === currentPage){
-            setShowPreviousButton(true);
-        }
-
-        if(currentPage === fullPage-1){
-            setShowNextButton(false);
-        }
-
-    };
-
-    const handlePreviousButton = (event, value) => {
-        setCurrentPage(currentPage-1);
-
-        if(currentPage === fullPage){
-            setShowNextButton(true);
-        }
-
-        if(currentPage === fullPage-7){
-            setShowPreviousButton(false);
-        }
+        setItemsToShow((prevItemsToShow) => prevItemsToShow + 10);
     };
 
     const arrayBufferToBase64 = (buffer) => {
@@ -104,10 +74,6 @@ const BestSellingProducts=(props)=>{
 
                             <div className="d-flex align-items-center">
                                 <a href="#" className="btn-link text-decoration-none">View All Categories →</a>
-                                <div className="swiper-buttons paginate">
-                                    <button className="swiper-prev products-carousel-prev btn" disabled={!showPreviousButton} onClick={handlePreviousButton}>❮</button>
-                                    <button className="swiper-next products-carousel-next btn" disabled={!showNextButton}  onClick={handleNextButton}>❯</button>
-                                </div>
                             </div>
                         </div>
 
@@ -120,7 +86,7 @@ const BestSellingProducts=(props)=>{
                             <div className="swiper-wrapper">
                                 <Box sx={{ flexGrow: 1 }} >
                                     <Grid container spacing={3} columns={{ xs: 4, sm: 8, md: 12 }} >
-                                        {currentPosts.map(({_id,image,name,unit_of_volume,unit_price,volume}, index) =>(
+                                        {posts.slice(0, itemsToShow).map(({_id,image,name,unit_of_volume,unit_price,volume}, index) =>(
                                             <Grid item xs={4} lg={2.4} md={2.4}  key={index} >
                                                 <div className="col" style={{cursor:'pointer'}} onClick={(e)=> handleClickOpen(_id)}>
                                                     <div className="product-item">
@@ -147,6 +113,11 @@ const BestSellingProducts=(props)=>{
                                         ))}
                                     </Grid>
                                 </Box>
+                            </div>
+                            <div className="swiper-buttons paginate">
+                                {itemsToShow < posts.length && (<Button variant="outlined" size="medium" onClick={handleNextButton} disabled={!showNextButton}>
+                                    Show more
+                                </Button>)}
                             </div>
                         </div>
 
