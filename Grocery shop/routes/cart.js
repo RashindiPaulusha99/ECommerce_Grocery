@@ -4,11 +4,13 @@ const router = express.Router()
 const cors = require('cors'); // Import the cors middleware
 
 const Cart = require('../models/cart.models')
+const Item = require('../models/item.models')
 
 app.use(express.json())
 app.use(cors());
 
 router.post('/save',async (req,res) => {
+
     const cart = new Cart({
         item_Id:req.body.item_Id,
         name:req.body.name,
@@ -45,6 +47,7 @@ router.put("/update/:id",async (req,res) => {
     }
 
 })
+
 router.get('/getAll',async (req, res) =>{
     try {
         const get = await Cart.find()

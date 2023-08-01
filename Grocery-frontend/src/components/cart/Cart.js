@@ -114,7 +114,8 @@ const Cart = (props) => {
 
     const handlePayment=()=>{
         history.push({
-            pathname:'/payment'
+            pathname:'/payment',
+            state: total
         });
     }
 

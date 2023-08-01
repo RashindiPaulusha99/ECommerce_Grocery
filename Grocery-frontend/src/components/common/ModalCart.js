@@ -37,6 +37,7 @@ const ModalCart=(props)=>{
 
     const history = useHistory();
 
+    const[posts, setPosts]=useState([])
     const[id, setId]=useState('')
     const[image, setImage]=useState('')
     const[name, setName]=useState('')
@@ -88,30 +89,69 @@ const ModalCart=(props)=>{
         setCountCart((prevCount) => (prevCount < 100 ? prevCount + 1 : 100));
     };
 
-    const handleCart=async ()=>{
+    const handleCart = async () => {
         var price;
-        if (discount !== 0){
-            price = unitPrice*(100-discount)/100;
-        }else {
-            price =unitPrice;
+        if (discount !== 0) {
+            price = unitPrice * (100 - discount) / 100;
+        } else {
+            price = unitPrice;
         }
+
         const cart = {
             "item_Id": id,
             "name": name,
             "brand": brand,
             "qty": countCart,
             "unit_price": unitPrice,
-            "total_units_price": price*countCart
-        }
+            "total_units_price": price * countCart
+        };
 
-        const response = await HomeService.saveCart(cart);
+        const carts = await HomeService.getCart(cart);
+        console.log(carts.data);
 
-        if (response.status === 200){
-            history.push({
-                pathname:'/cart'
-            });
+        if (carts.data.length !== 0) {
+            let itemFound = false;
+            for (let dataKey in carts.data) {
+                if (id === carts.data[dataKey].item_Id) {
+                    const updateCart = {
+                        "item_Id": id,
+                        "name": name,
+                        "brand": brand,
+                        "qty": countCart + carts.data[dataKey].qty,
+                        "unit_price": unitPrice,
+                        "total_units_price": price * (countCart + carts.data[dataKey].qty)
+                    };
+                    const response = await HomeService.updateCart(carts.data[dataKey]._id, updateCart);
+
+                    if (response.status === 200) {
+                        itemFound = true;
+                        history.push({
+                            pathname: '/cart'
+                        });
+                        break;
+                    }
+                }
+            }
+
+            if (!itemFound) {
+                const response = await HomeService.saveCart(cart);
+
+                if (response.status === 200) {
+                    history.push({
+                        pathname: '/cart'
+                    });
+                }
+            }
+        } else {
+            const response = await HomeService.saveCart(cart);
+
+            if (response.status === 200) {
+                history.push({
+                    pathname: '/cart'
+                });
+            }
         }
-    }
+    };
 
     return(
 
@@ -163,28 +203,64 @@ const ModalCart=(props)=>{
                         </IconButton>
                         <TextField
                             className={style.root}
-                            sx={{width: '10ch',borderColor:'transparent'}}
+                            sx={{
+                                width: '10ch',
+                                borderColor:'transparent'
+                            }}
                             id="outlined-size-small"
                             type="text"
                             value={countCart}
                             size="small"
                             readonly
                         />
-                        <IconButton aria-label="plus" onClick={handlePlus}>
+                        <IconButton aria-label="plus"
+                                    onClick={handlePlus}
+                        >
                             <AddIcon />
                         </IconButton>
                     </div>
                     <div>
-                        <Button size='large' fullWidth variant="outlined" style={{marginBottom:14,marginTop:14,height:50,borderColor:"transparent",color:"white",backgroundColor:'mediumturquoise',boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'}} startIcon={<ShoppingBagOutlinedIcon/>} onClick={handleCart}>
+                        <Button size='large'
+                                fullWidth
+                                variant="outlined"
+                                style={{
+                                    marginBottom:14,
+                                    marginTop:14,
+                                    height:50,
+                                    borderColor:"transparent",
+                                    color:"white",
+                                    backgroundColor:'mediumturquoise',
+                                    boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px'
+                                }}
+                                startIcon={<ShoppingBagOutlinedIcon/>}
+                                onClick={handleCart}>
                             Add To Cart
                         </Button>
                     </div>
-                    <h6 style={{display:'inline-flex',color:'darkslategray'}}>
+                    <h6 style={{
+                            display:'inline-flex',
+                            color:'darkslategray'
+                        }}>
                         Tags : 
                     </h6>
-                    <Chip label="Local" style={{display:'inline-flex',backgroundColor:'paleturquoise',margin:6,}}/>
-                    <Chip label={category}  style={{display:'inline-flex',backgroundColor:'paleturquoise',margin:6}}/>
-                    <p style={{color:'darkslategray',marginTop:14,}}>Product Details :</p>
+                    <Chip label="Local"
+                          style={{
+                              display:'inline-flex',
+                              backgroundColor:'paleturquoise',
+                              margin:6,
+                          }}/>
+                    <Chip label={category}
+                          style={{
+                              display:'inline-flex',
+                              backgroundColor:'paleturquoise',
+                              margin:6
+                          }}/>
+                    <p style={{
+                            color:'darkslategray',
+                            marginTop:14,
+                        }}>
+                        Product Details :
+                    </p>
                     <p>{description}</p>
                 </Grid>
             </Grid>

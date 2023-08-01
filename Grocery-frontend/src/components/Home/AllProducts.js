@@ -145,7 +145,7 @@ const AllProducts=()=>{
                                                             <span className="price">{"Rs "+unit_price+".00"}</span>
                                                             <div className="d-flex align-items-center justify-content-between">
                                                                
-                                                                <a href="#g" className="btn-wishlist">
+                                                                <a className="btn-wishlist">
                                                                     <svg width="24" height="24">
                                                                         <use xlinkHref="#plus"></use>
                                                                     </svg>

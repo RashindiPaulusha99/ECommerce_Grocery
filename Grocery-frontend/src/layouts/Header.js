@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useHistory } from "react-router-dom";
 import Button from '@mui/material/Button';
 import ReorderIcon from '@mui/icons-material/Reorder';
@@ -7,13 +7,19 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import grocery from "../assets/images/grocery.jpg";
 import CategoryMenu from "../components/common/CategoryMenu";
 import ProfileMenu from "../components/common/ProfileMenu";
+import HomeService from "../Services/HomeService";
 
 const Header=()=>{
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [anchorEl2, setAnchorEl2] = React.useState(null);
+    const [cart, setCart] = React.useState(0);
 
     const history = useHistory();
+
+    useEffect(()=>{
+        handleCartSize();
+    })
 
     const opens = Boolean(anchorEl);
     const openProfileMenu = Boolean(anchorEl2);
@@ -44,6 +50,13 @@ const Header=()=>{
         history.push({
             pathname:'/home'
         });
+    }
+
+    const handleCartSize=async ()=>{
+        const response = await HomeService.getCart();
+        if (response.status === 200){
+            setCart(response.data.length)
+        }
     }
 
     return(
@@ -84,7 +97,7 @@ const Header=()=>{
                                 </a>
                             </li>
                             <li className="" onClick={handleCart} style={{cursor: "pointer"}}>
-                                <span className="badge bg-primary rounded-pill" style={{position: "absolute",display: "flex"}}>4</span>
+                                {cart !== 0 ? <span className="badge bg-primary rounded-pill" style={{position: "absolute",display: "flex"}}>{cart}</span> : null}
                                 <a  className="rounded-circle bg-light p-2 mx-1" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart">
                                     <svg width="24" height="24" viewBox="0 0 24 24"><use xlinkHref="#cart"></use></svg>
                                 </a>
@@ -126,6 +139,7 @@ const Header=()=>{
                                         
                                             <Button
                                                 id="basic-button"
+                                                style={{color:'black'}}
                                                 aria-controls={opens ? 'basic-menu' : undefined}
                                                 aria-haspopup="true"
                                                 aria-expanded={opens ? 'true' : undefined}

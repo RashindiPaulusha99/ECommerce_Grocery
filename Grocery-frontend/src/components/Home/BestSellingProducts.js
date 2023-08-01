@@ -5,9 +5,13 @@ import banana from "../../assets/images/thumb-bananas.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import vegetables_broccoli from "../../assets/images/icon-vegetables-broccoli.png";
+import Slide from "@mui/material/Slide";
+import HomeService from "../../Services/HomeService";
+import ModalCart from "../common/ModalCart";
 
 const BestSellingProducts=()=>{
 
+    const [status, setStatus] = useState('All');
     const [posts, setPosts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [postPerPage, setPostPerPage] = useState(10);
@@ -15,20 +19,39 @@ const BestSellingProducts=()=>{
     const [showNextButton, setShowNextButton] = useState(true);
     const [fullPage, setFullPage] = useState(9);
 
+    const Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />;
+    });
+
+    const [open, setOpen] = React.useState(false);
+    const [id, setId] = React.useState("");
+
+    const handleClickOpen =async (e) => {
+        //const response  = await HomeService.fetchItem(e);
+        setId(e)
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setId("")
+        setOpen(false);
+    };
+
+
     useEffect(()=>{
-
-        const fetchDetails = async()=>{
-            const response = await fetch(
-                'https://jsonplaceholder.typicode.com/posts'
-            );
-
-            const responseData = await response.json();
-
-            setPosts(responseData);
-            setShowPreviousButton(false);
-        }
         fetchDetails();
     }, []);
+
+    const fetchDetails = async()=>{
+        const response = await HomeService.fetchItems(status);
+        console.log(response.data)
+
+        if (response.status === 200){
+            setPosts(response.data);
+            setShowPreviousButton(false);
+        }
+    }
+
 
     const indexOfLastPost = currentPage * postPerPage;
     const indexOfFirstPost = indexOfLastPost - postPerPage;
@@ -59,6 +82,13 @@ const BestSellingProducts=()=>{
         }
     };
 
+    const arrayBufferToBase64 = (buffer) => {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
+
     return(
         <section className="py-5 overflow-hidden">
             <div className="container-fluid">
@@ -71,7 +101,7 @@ const BestSellingProducts=()=>{
 
                             <div className="d-flex align-items-center">
                                 <a href="#" className="btn-link text-decoration-none">View All Categories →</a>
-                                <div className="swiper-buttons">
+                                <div className="swiper-buttons paginate">
                                     <button className="swiper-prev products-carousel-prev btn" disabled={!showPreviousButton} onClick={handlePreviousButton}>❮</button>
                                     <button className="swiper-next products-carousel-next btn" disabled={!showNextButton}  onClick={handleNextButton}>❯</button>
                                 </div>
@@ -87,242 +117,40 @@ const BestSellingProducts=()=>{
                             <div className="swiper-wrapper">
                                 <Box sx={{ flexGrow: 1 }} >
                                     <Grid container spacing={3} columns={{ xs: 4, sm: 8, md: 12 }} >
-                                        {currentPosts.map((post) =>(
-                                            <Grid item xs={4} lg={2.4} md={2.4}  key={post.id} >
-                                                <div className="product-item swiper-slide">
-                                                    <a href="#" className="btn-wishlist"><svg width="24" height="24"><use xlinkHref="#heart"></use></svg></a>
-                                                    <figure>
-                                                        <a href="product-single.html" title="Product Title">
-                                                            <img src={tomato} alt='tomato' className="tab-image"/>
-                                                        </a>
-                                                    </figure>
-                                                    <h3>{post.title}</h3>
-                                                    <span className="qty">1 Unit</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
-                                                    <span className="price">$18.00</span>
-                                                    <div className="d-flex align-items-center justify-content-between">
-                                                        <div className="input-group product-qty">
-                                                            <span className="input-group-btn">
-                                                                <button type="button" className="quantity-left-minus btn btn-danger btn-number"  datatype="minus" data-field="">
-                                                                  <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                                                                </button>
-                                                            </span>
-                                                            <input type="text" id="quantity" name="quantity" className="form-control input-number" value="10" min="1" max="100"/>
-                                                            <span className="input-group-btn">
-                                                                <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="">
-                                                                    <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                                                                </button>
-                                                            </span>
+                                        {currentPosts.map(({_id,image,name,unit_of_volume,unit_price,volume}, index) =>(
+                                            <Grid item xs={4} lg={2.4} md={2.4}  key={index} >
+                                                <div className="col" style={{cursor:'pointer'}} onClick={(e)=> handleClickOpen(_id)}>
+                                                    <div className="product-item">
+
+                                                        <figure>
+                                                            <a title="Product Title">
+                                                                <img src={'data:image/jpeg;base64,'+arrayBufferToBase64(image.data.data)} alt='thumb bananas' className="tab-image"/>
+                                                            </a>
+                                                        </figure>
+                                                        <h3>{name}</h3>
+                                                        <span className="qty">{volume+" "+unit_of_volume}</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
+                                                        <span className="price">{"Rs "+unit_price+".00"}</span>
+                                                        <div className="d-flex align-items-center justify-content-between">
+
+                                                            <a className="btn-wishlist">
+                                                                <svg width="24" height="24">
+                                                                    <use xlinkHref="#plus"></use>
+                                                                </svg>
+                                                            </a>
                                                         </div>
-                                                        <a href="#" className="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"/></a>
                                                     </div>
                                                 </div>
                                             </Grid>
                                         ))}
                                     </Grid>
                                 </Box>
-
-                                {/*<div className="product-item swiper-slide">
-                                    <a href="#" className="btn-wishlist"><svg width="24" height="24"><use xlinkHref="#heart"></use></svg></a>
-                                    <figure>
-                                        <a href="product-single.html" title="Product Title">
-                                            <img src={tomatokechup} alt='tomato kechup'  className="tab-image"/>
-                                        </a>
-                                    </figure>
-                                    <h3>Sunstar Fresh Melon Juice</h3>
-                                    <span className="qty">1 Unit</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
-                                    <span className="price">$18.00</span>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="input-group product-qty">
-                        <span className="input-group-btn">
-                            <button type="button" className="quantity-left-minus btn btn-danger btn-number"  datatype="minus" data-field="">
-                              <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                            </button>
-                        </span>
-                                            <input type="text" id="quantity" name="quantity" className="form-control input-number" value="10" min="1" max="100"/>
-                                            <span className="input-group-btn">
-                            <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="">
-                                <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                            </button>
-                        </span>
-                                        </div>
-                                        <a href="#" className="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"/></a>
-                                    </div>
-                                </div>
-
-                                <div className="product-item swiper-slide">
-                                    <a href="#" className="btn-wishlist"><svg width="24" height="24"><use xlinkHref="#heart"></use></svg></a>
-                                    <figure>
-                                        <a href="product-single.html" title="Product Title">
-                                            <img src={banana} alt='banana'  className="tab-image"/>
-                                        </a>
-                                    </figure>
-                                    <h3>Sunstar Fresh Melon Juice</h3>
-                                    <span className="qty">1 Unit</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
-                                    <span className="price">$18.00</span>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="input-group product-qty">
-                        <span className="input-group-btn">
-                            <button type="button" className="quantity-left-minus btn btn-danger btn-number"  datatype="minus" data-field="">
-                              <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                            </button>
-                        </span>
-                                            <input type="text" id="quantity" name="quantity" className="form-control input-number" value="10" min="1" max="100"/>
-                                            <span className="input-group-btn">
-                            <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="">
-                                <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                            </button>
-                        </span>
-                                        </div>
-                                        <a href="#" className="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"/></a>
-                                    </div>
-                                </div>
-
-                                <div className="product-item swiper-slide">
-                                    <a href="#" className="btn-wishlist"><svg width="24" height="24"><use xlinkHref="#heart"></use></svg></a>
-                                    <figure>
-                                        <a href="product-single.html" title="Product Title">
-                                            <img src={tomato} alt='tomato' className="tab-image"/>
-                                        </a>
-                                    </figure>
-                                    <h3>Sunstar Fresh Melon Juice</h3>
-                                    <span className="qty">1 Unit</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
-                                    <span className="price">$18.00</span>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="input-group product-qty">
-                        <span className="input-group-btn">
-                            <button type="button" className="quantity-left-minus btn btn-danger btn-number"  datatype="minus" data-field="">
-                              <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                            </button>
-                        </span>
-                                            <input type="text" id="quantity" name="quantity" className="form-control input-number" value="10" min="1" max="100"/>
-                                            <span className="input-group-btn">
-                            <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="">
-                                <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                            </button>
-                        </span>
-                                        </div>
-                                        <a href="#" className="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"/></a>
-                                    </div>
-                                </div>
-
-                                <div className="product-item swiper-slide">
-                                    <a href="#" className="btn-wishlist"><svg width="24" height="24"><use xlinkHref="#heart"></use></svg></a>
-                                    <figure>
-                                        <a href="product-single.html" title="Product Title">
-                                            <img src={tomatokechup} alt='tomato kechup'  className="tab-image"/>
-                                        </a>
-                                    </figure>
-                                    <h3>Sunstar Fresh Melon Juice</h3>
-                                    <span className="qty">1 Unit</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
-                                    <span className="price">$18.00</span>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="input-group product-qty">
-                        <span className="input-group-btn">
-                            <button type="button" className="quantity-left-minus btn btn-danger btn-number"  datatype="minus" data-field="">
-                              <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                            </button>
-                        </span>
-                                            <input type="text" id="quantity" name="quantity" className="form-control input-number" value="10" min="1" max="100"/>
-                                            <span className="input-group-btn">
-                            <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="">
-                                <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                            </button>
-                        </span>
-                                        </div>
-                                        <a href="#" className="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"/></a>
-                                    </div>
-                                </div>
-
-                                <div className="product-item swiper-slide">
-                                    <a href="#" className="btn-wishlist"><svg width="24" height="24"><use xlinkHref="#heart"></use></svg></a>
-                                    <figure>
-                                        <a href="product-single.html" title="Product Title">
-                                            <img src={banana} alt='banana'  className="tab-image"/>
-                                        </a>
-                                    </figure>
-                                    <h3>Sunstar Fresh Melon Juice</h3>
-                                    <span className="qty">1 Unit</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
-                                    <span className="price">$18.00</span>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="input-group product-qty">
-                        <span className="input-group-btn">
-                            <button type="button" className="quantity-left-minus btn btn-danger btn-number"  datatype="minus" data-field="">
-                              <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                            </button>
-                        </span>
-                                            <input type="text" id="quantity" name="quantity" className="form-control input-number" value="10" min="1" max="100"/>
-                                            <span className="input-group-btn">
-                            <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="">
-                                <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                            </button>
-                        </span>
-                                        </div>
-                                        <a href="#" className="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"/></a>
-                                    </div>
-                                </div>
-
-                                <div className="product-item swiper-slide">
-                                    <a href="#" className="btn-wishlist"><svg width="24" height="24"><use xlinkHref="#heart"></use></svg></a>
-                                    <figure>
-                                        <a href="product-single.html" title="Product Title">
-                                            <img src={tomato} alt='tomato' className="tab-image"/>
-                                        </a>
-                                    </figure>
-                                    <h3>Sunstar Fresh Melon Juice</h3>
-                                    <span className="qty">1 Unit</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
-                                    <span className="price">$18.00</span>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="input-group product-qty">
-                        <span className="input-group-btn">
-                            <button type="button" className="quantity-left-minus btn btn-danger btn-number"  datatype="minus" data-field="">
-                              <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                            </button>
-                        </span>
-                                            <input type="text" id="quantity" name="quantity" className="form-control input-number" value="10" min="1" max="100"/>
-                                            <span className="input-group-btn">
-                            <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="">
-                                <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                            </button>
-                        </span>
-                                        </div>
-                                        <a href="#" className="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"/></a>
-                                    </div>
-                                </div>
-
-                                <div className="product-item swiper-slide">
-                                    <a href="#" className="btn-wishlist"><svg width="24" height="24"><use xlinkHref="#heart"></use></svg></a>
-                                    <figure>
-                                        <a href="product-single.html" title="Product Title">
-                                            <img src={tomatokechup} alt='tomato kechup'  className="tab-image"/>
-                                        </a>
-                                    </figure>
-                                    <h3>Sunstar Fresh Melon Juice</h3>
-                                    <span className="qty">1 Unit</span><span className="rating"><svg width="24" height="24" className="text-primary"><use xlinkHref="#star-solid"></use></svg> 4.5</span>
-                                    <span className="price">$18.00</span>
-                                    <div className="d-flex align-items-center justify-content-between">
-                                        <div className="input-group product-qty">
-                        <span className="input-group-btn">
-                            <button type="button" className="quantity-left-minus btn btn-danger btn-number"  datatype="minus" data-field="">
-                              <svg width="16" height="16"><use xlinkHref="#minus"></use></svg>
-                            </button>
-                        </span>
-                                            <input type="text" id="quantity" name="quantity" className="form-control input-number" value="10" min="1" max="100"/>
-                                            <span className="input-group-btn">
-                            <button type="button" className="quantity-right-plus btn btn-success btn-number" datatype="plus" data-field="">
-                                <svg width="16" height="16"><use xlinkHref="#plus"></use></svg>
-                            </button>
-                        </span>
-                                        </div>
-                                        <a href="#" className="nav-link">Add to Cart <iconify-icon icon="uil:shopping-cart"/></a>
-                                    </div>
-                                </div>*/}
-
                             </div>
                         </div>
 
                     </div>
                 </div>
             </div>
+            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} /> : null}
         </section>
     )
 }

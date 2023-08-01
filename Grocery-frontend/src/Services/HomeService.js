@@ -70,9 +70,34 @@ class HomeService {
         return await promise
     }
 
+    updateCart = async (id,data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.put(`/cart/update/${id}`,data)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
     getCart = async () =>{
         const promise = new Promise((resolve, reject) =>{
             axios.get('/cart/getAll')
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    getACart = async (id) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/cart/get/'+id,{
+            })
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{
