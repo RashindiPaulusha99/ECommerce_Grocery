@@ -1,29 +1,49 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {useHistory, withRouter} from "react-router-dom";
 import Header from "../../layouts/Header";
-import HeaderIcons from "./HeaderIcons";
+import HeaderIcons from "../Home/HeaderIcons";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import ModalCart from "../common/ModalCart";
+import ModalCart from "./ModalCart";
 import Slide from "@mui/material/Slide";
 import HomeService from "../../Services/HomeService";
+import ProductsHeader from "../../layouts/ProductsHeader";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const Products=(props)=>{
 
-    const [status, setStatus] = useState("All");
+    const [status, setStatus] = useState('');
+    const [itemLength, setItemLength] = useState(0);
     const [posts, setPosts] = useState([]);
     const [showNextButton, setShowNextButton] = useState(true);
     const [itemsToShow, setItemsToShow] = useState(10);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-    });
-
     const [open, setOpen] = useState(false);
     const [id, setId] = useState("");
+
+    useEffect(()=>{
+        console.log("hgjj")
+        console.log(props.location.state.status)
+        fetchDetails(props.location.state.status);
+        setStatus(props.location.state.status)
+        setEmail(props.location.state.email)
+        setPassword(props.location.state.password)
+    }, []);
+
+    const fetchDetails = async(status)=>{
+        const response = await HomeService.fetchItems(status);
+        console.log(response.data)
+
+        if (response.status === 200){
+            setPosts(response.data);
+            setItemLength(response.data.length)
+        }
+    }
 
     const handleClickOpen =async (e) => {
         setId(e)
@@ -34,23 +54,6 @@ const Products=(props)=>{
         setId("")
         setOpen(false);
     };
-
-
-    useEffect(()=>{
-        console.log(status)
-        fetchDetails();
-        setEmail(props.location.state.email)
-        setPassword(props.location.state.password)
-        setStatus(props.location.state.status)
-    }, []);
-
-    const fetchDetails = async()=>{
-        const response = await HomeService.fetchItems(status);
-
-        if (response.status === 200){
-            setPosts(response.data);
-        }
-    }
 
     const handleNextButton = (event, value) => {
         setItemsToShow((prevItemsToShow) => prevItemsToShow + 10);
@@ -65,12 +68,23 @@ const Products=(props)=>{
 
     return(
         <Fragment>
-            <Header/>
-            <HeaderIcons/>
-            <section className="py-5 overflow-hidden">
+            <ProductsHeader email={email} password={password}/>
+            <HeaderIcons email={email} password={password}/>
+            <section className="overflow-hidden">
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-12">
+
+                            <div className="tabs-header d-flex justify-content-between my-3">
+                                <h5>{"Category → "+status+" "}<span style={{fontSize:13,color:'black',fontWeight:'bold'}}>{itemLength !== 0 ? "("+itemLength + " Items Found)" : "(No Items Found)"}</span></h5>
+                                <div className="d-flex align-items-center">
+                                    <a className="btn-link text-decoration-none" style={{display:'contents'}}>Sort by → <span><select
+                                        className="form-select form-select-sm" aria-label=".form-select-sm example" style={{borderColor:'transparent'}}>
+                                          <option selected>Lowest Price</option>
+                                          <option value="1">Highest Price</option>
+                                        </select></span></a>
+                                </div>
+                            </div>
 
                             <div className="products-carousel swiper">
                                 <div className="swiper-wrapper">

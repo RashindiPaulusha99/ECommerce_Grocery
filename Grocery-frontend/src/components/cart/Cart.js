@@ -141,8 +141,8 @@ const Cart = (props) => {
 
     return(
             <div>
-                <Header/>
-                <HeaderIcons/>
+                <Header email={email} password={password}/>
+                <HeaderIcons email={email} password={password}/>
                 <Box sx={{ flexGrow: 1 }}>
                     {cartLength !== 0 ?
                         <Grid container spacing={1}>

@@ -146,6 +146,9 @@ const Payment=(props)=>{
                 setSeverity("error")
                 setMessage("Payment Failed!")
                 handleClick()
+                history.push({
+                    pathname:'/login'
+                });
             }
         }
     }
@@ -168,8 +171,8 @@ const Payment=(props)=>{
 
     return(
         <Fragment>
-            <Header/>
-            <HeaderIcons/>
+            <Header email={email} password={password}/>
+            <HeaderIcons email={email} password={password}/>
             <div style={{width:'100%',padding:24}}>
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">

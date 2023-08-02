@@ -33,8 +33,8 @@ const PaymentResponse=(props)=>{
 
     return(
         <Fragment>
-            <Header/>
-            <HeaderIcons/>
+            <Header email={email} password={password}/>
+            <HeaderIcons email={email} password={password}/>
             <div style={{width:'40%',height:'45vh',position:'relative',top:0,bottom:0,left:0,right:0,margin:"auto",boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px'}}>
                 <Typography variant="h5" gutterBottom style={{color:'black',fontWeight:"bold",textAlign:"center",lineHeight:1.2,fontFamily:'Plus Jakarta Sans", sans-serif',paddingTop:24}}>
                     <IconButton aria-label="delete" style={{color:'lightgreen',position:"relative",bottom:5}}>

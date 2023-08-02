@@ -18,6 +18,7 @@ const  CategoryMenu=(props)=>{
 
     const [email, setEmail]=useState('')
     const [password, setPassword]=useState('')
+    const [status, setStatus]=useState('')
 
     useEffect(()=>{
         setEmail(props.email);
@@ -27,11 +28,13 @@ const  CategoryMenu=(props)=>{
     const history = useHistory();
 
     const handleLoadProducts=(status)=>{
+        console.log(status)
         const temp={
             "email":email,
             "password":password,
             "status":status
         }
+        console.log(temp)
 
         history.push({
             pathname:'/products',

@@ -41,6 +41,7 @@ const AllProducts=(props)=>{
 
     const fetchDetails = async()=>{
         const response = await HomeService.fetchItems(status);
+        console.log(response.data)
 
         if (response.status === 200){
             setPosts(response.data);

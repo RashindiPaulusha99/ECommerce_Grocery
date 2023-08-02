@@ -8,7 +8,7 @@ import Cart from "./components/cart/Cart";
 import Payment from "./components/common/Payment";
 import Register from "./components/Login/Register";
 import PaymentResponse from "./components/common/PaymentResponse";
-import Products from "./components/Home/Products";
+import Products from "./components/common/Products";
 
 function App() {
   return (
