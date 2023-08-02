@@ -22,12 +22,14 @@ import Footer from "../layouts/Footer";
 
 const Home=(props)=>{
 
-        const [email,setEmail]=useState('')
-        const [password,setPassword]=useState('')
+     const [email,setEmail]=useState('')
+     const [password,setPassword]=useState('')
 
      useEffect(()=>{
-            setEmail(props.location.state.email)
-            setPassword(props.location.state.password)
+        setEmail(props.location.state.email)
+        setPassword(props.location.state.password)
+         console.log(email)
+         console.log(password)
      })
 
     return(

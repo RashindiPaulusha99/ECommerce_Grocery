@@ -7,6 +7,10 @@ import HomeService from "../../Services/HomeService";
 import Slide from '@mui/material/Slide';
 import ModalCart from "../common/ModalCart";
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 const AllProducts=(props)=>{
 
     const [posts, setPosts] = useState([]);
@@ -18,16 +22,12 @@ const AllProducts=(props)=>{
     const [password, setPassword] = useState('');
     const [itemsToShow, setItemsToShow] = useState(10);
 
-    const Transition = React.forwardRef(function Transition(props, ref) {
-        return <Slide direction="up" ref={ref} {...props} />;
-    });
-
-      const handleClickOpen =async (e) => {
+    const handleClickOpen =async (e) => {
         setId(e)
         setOpen(true);
       };
 
-      const handleClose = () => {
+    const handleClose = () => {
         setId("")
         setOpen(false);
       };
@@ -37,11 +37,12 @@ const AllProducts=(props)=>{
         fetchDetails();
         setEmail(props.email)
         setPassword(props.password)
+        console.log(email)
+        console.log(password)
     }, []);
 
     const fetchDetails = async()=>{
         const response = await HomeService.fetchItems(status);
-        console.log(response.data)
 
         if (response.status === 200){
             setPosts(response.data);

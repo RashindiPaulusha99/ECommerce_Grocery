@@ -71,7 +71,8 @@ const Header=(props)=>{
     }
 
     const handleCartSize=async ()=>{
-        const response = await HomeService.getCart();
+        const user = await HomeService.getUser(email,password);
+        const response = await HomeService.getCart(user.data._id);
         if (response.status === 200){
             setCart(response.data.length)
         }

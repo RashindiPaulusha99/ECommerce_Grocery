@@ -109,9 +109,9 @@ class HomeService {
         return await promise
     }
 
-    getCart = async () =>{
+    getCart = async (id) =>{
         const promise = new Promise((resolve, reject) =>{
-            axios.get('/cart/getAll')
+            axios.get('/cart/get/userBy/'+id)
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{

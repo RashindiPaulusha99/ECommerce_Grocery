@@ -40,7 +40,8 @@ const Cart = (props) => {
     },[])
 
     const handleCart=async ()=>{
-        const response = await HomeService.getCart();
+        const user = await HomeService.getUser(email,password);
+        const response = await HomeService.getCart(user.data._id);
 
         if (response.status === 200){
             setPosts([...response.data])
@@ -147,7 +148,7 @@ const Cart = (props) => {
                     {cartLength !== 0 ?
                         <Grid container spacing={1}>
                            <Grid item xs={12} md={8} lg={8} style={{width: '100%',margin:30}}>
-                                {posts.map(({_id,brand,item_Id, qty,name,total_units_price,unit_price}, index) =>(
+                                {posts.map(({_id,brand,item_Id, qty,name,total_units_price,unit_price,user_Id}, index) =>(
 
                                     <Grid container spacing={1} style={{marginBottom:18,boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px',borderRadius:8,cursor:'pointer'}}>
                                         <Grid item xs={12} md={2} lg={2} style={{display:'flex',justifyContent:'center',}}>

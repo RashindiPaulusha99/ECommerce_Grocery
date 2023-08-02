@@ -37,7 +37,6 @@ const ModalCart=(props)=>{
 
     const history = useHistory();
 
-    const[posts, setPosts]=useState([])
     const[id, setId]=useState('')
     const[image, setImage]=useState('')
     const[name, setName]=useState('')
@@ -56,6 +55,8 @@ const ModalCart=(props)=>{
     const style = useStyle();
 
     useEffect(()=>{
+        console.log(props.email)
+        console.log(props.password)
         test(props.id)
         setEmail(props.email)
         setPassword(props.password)
@@ -100,7 +101,11 @@ const ModalCart=(props)=>{
             price = unitPrice;
         }
 
+        const user = await HomeService.getUser(email,password);
+        console.log(user)
+
         const cart = {
+            "user_Id": user.data._id,
             "item_Id": id,
             "name": name,
             "brand": brand,
@@ -114,13 +119,15 @@ const ModalCart=(props)=>{
             "password":password
         }
 
-        const carts = await HomeService.getCart(cart);
+        const carts = await HomeService.getCart(user.data._id);
+        console.log(carts)
 
         if (carts.data.length !== 0) {
             let itemFound = false;
             for (let dataKey in carts.data) {
                 if (id === carts.data[dataKey].item_Id) {
                     const updateCart = {
+                        "user_Id": user.data._id,
                         "item_Id": id,
                         "name": name,
                         "brand": brand,

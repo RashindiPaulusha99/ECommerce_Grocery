@@ -71,19 +71,37 @@ const Login=()=>{
             const  response = await HomeService.userLogin(email,password);
 
             if (response.status === 200 && response.data !== null){
-                setSeverity("success")
-                setMessage("Logged Successfully!")
-                handleClick()
 
-                const temp={
-                    "email":email,
-                    "password":password
+                if (response.data.role === "USER"){
+                    setSeverity("success")
+                    setMessage("Logged Successfully!")
+                    handleClick()
+
+                    const temp={
+                        "email":email,
+                        "password":password
+                    }
+
+                    history.push({
+                        pathname:'/home',
+                        state: temp
+                    });
+                }else if (response.data.role === "OWNER" || response.data.role === "ADMIN"){
+                    setSeverity("success")
+                    setMessage("Logged Successfully!")
+                    handleClick()
+
+                    const temp={
+                        "email":email,
+                        "password":password
+                    }
+
+                    history.push({
+                        pathname:'/dashboard',
+                        state: temp
+                    });
                 }
 
-                history.push({
-                    pathname:'/home',
-                    state: temp
-                });
             }else {
                 setSeverity("error")
                 setMessage("Logged Failed!")

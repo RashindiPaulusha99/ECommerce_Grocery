@@ -9,6 +9,7 @@ import Payment from "./components/common/Payment";
 import Register from "./components/Login/Register";
 import PaymentResponse from "./components/common/PaymentResponse";
 import Products from "./components/common/Products";
+import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {
   return (
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path='/home'>
               <Home/>
+          </Route>
+          <Route path='/dashboard'>
+              <Dashboard/>
           </Route>
           <Route path='*'>
               <NotFoundIndex/>
