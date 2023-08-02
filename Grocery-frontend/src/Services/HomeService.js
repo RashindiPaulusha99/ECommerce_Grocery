@@ -58,6 +58,19 @@ class HomeService {
         return await promise
     }
 
+    fetchItemsByOrder = async (status,order) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/item/getOrder/'+status+'/'+order,{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
     updateQty = async (id,body)=>{
 
         const promise = new Promise((resolve, reject) =>{

@@ -103,13 +103,32 @@ router.get('/getAll/:status',async (req, res) =>{
             const get = await Item.find()
             res.json(get)
         }else{
-            const get = await Item.find({ category: req.params.status }); // Use find with a filter for the Milk category
+            const get = await Item.find({ category: req.params.status });
             res.json(get);
         }
     }catch (error) {
         res.send('Error : '+error)
     }
 })
+
+router.get('/getOrder/:status/:order',async (req, res) =>{
+    try {
+        let order = req.params.order;
+        let sortOrder = 1;
+
+        if (order === "DESC") {
+            sortOrder = -1;
+        }
+
+        const category = req.params.status;
+        const get = await Item.find({ category: category }).sort({ unit_price: sortOrder });
+
+        res.json(get);
+    } catch (error) {
+        res.status(500).send('Error: ' + error);
+    }
+})
+
 
 router.get('/get/:id',async (req, res) =>{
     try {

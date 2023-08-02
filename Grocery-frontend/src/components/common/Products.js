@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {useHistory, withRouter} from "react-router-dom";
-import Header from "../../layouts/Header";
 import HeaderIcons from "../Home/HeaderIcons";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
@@ -27,8 +26,6 @@ const Products=(props)=>{
     const [id, setId] = useState("");
 
     useEffect(()=>{
-        console.log("hgjj")
-        console.log(props.location.state.status)
         fetchDetails(props.location.state.status);
         setStatus(props.location.state.status)
         setEmail(props.location.state.email)
@@ -37,10 +34,9 @@ const Products=(props)=>{
 
     const fetchDetails = async(status)=>{
         const response = await HomeService.fetchItems(status);
-        console.log(response.data)
 
         if (response.status === 200){
-            setPosts(response.data);
+            setPosts([...response.data]);
             setItemLength(response.data.length)
         }
     }
@@ -66,6 +62,24 @@ const Products=(props)=>{
         return window.btoa(binary);
     };
 
+    const handleSort=async (e)=>{
+        if (e == 1){
+            sort("ASC'")
+        }else if (e == 2){
+            sort("DESC")
+        }else if (e == 0){
+            fetchDetails(status)
+        }
+    }
+
+    const sort = async (order)=>{
+        const responseAsc = await HomeService.fetchItemsByOrder(status,order)
+        if (responseAsc.status === 200){
+            setPosts([...responseAsc.data]);
+            setItemLength(responseAsc.data.length)
+        }
+    }
+
     return(
         <Fragment>
             <ProductsHeader email={email} password={password}/>
@@ -76,13 +90,22 @@ const Products=(props)=>{
                         <div className="col-md-12">
 
                             <div className="tabs-header d-flex justify-content-between my-3">
-                                <h5>{"Category → "+status+" "}<span style={{fontSize:13,color:'black',fontWeight:'bold'}}>{itemLength !== 0 ? "("+itemLength + " Items Found)" : "(No Items Found)"}</span></h5>
+                                <h5>{"Category → " +status+" "}<span style={{fontSize:13,color:'black',fontWeight:'bold'}}>{itemLength !== 0 ? "("+itemLength + " Items Found)" : "(No Items Found)"}</span></h5>
                                 <div className="d-flex align-items-center">
-                                    <a className="btn-link text-decoration-none" style={{display:'contents'}}>Sort by → <span><select
-                                        className="form-select form-select-sm" aria-label=".form-select-sm example" style={{borderColor:'transparent'}}>
-                                          <option selected>Lowest Price</option>
-                                          <option value="1">Highest Price</option>
-                                        </select></span></a>
+                                    <a className="btn-link text-decoration-none" style={{display:'contents'}}>Sort by → <span>
+                                        <select className="form-select form-select-sm"
+                                                aria-label=".form-select-sm example"
+                                                style={{borderColor:'transparent'}}
+                                                defaultValue="All"
+                                                onChange={(e)=>{
+                                                    handleSort(e.target.value)
+                                                }}
+                                        >
+                                          <option value="0">All</option>
+                                          <option value="1">Lowest Price</option>
+                                          <option value="2">Highest Price</option>
+                                        </select>
+                                    </span></a>
                                 </div>
                             </div>
 
