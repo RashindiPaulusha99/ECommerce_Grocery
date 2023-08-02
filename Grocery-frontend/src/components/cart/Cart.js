@@ -229,11 +229,16 @@ const Cart = (props) => {
                             </Grid>
                         </Grid>
                     :
-                        <div style={{margin:10,display:"flex",justifyContent:'center'}}>
-                            <Button  size="large" variant="outlined" onClick={openHomePage}>
-                                Continue Shopping
-                            </Button>
-                        </div>
+                        <>
+                            <div style={{margin:10,display:"flex",justifyContent:'center'}}>
+                                <p>Empty cart</p>
+                            </div>
+                            <div style={{margin:5,display:"flex",justifyContent:'center'}}>
+                                <Button  size="large" variant="outlined" onClick={openHomePage}>
+                                    Continue Shopping
+                                </Button>
+                            </div>
+                        </>
                     }
                 </Box>
                 <DeleteModal

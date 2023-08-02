@@ -58,6 +58,20 @@ class HomeService {
         return await promise
     }
 
+    updateQty = async (id,body)=>{
+
+        const promise = new Promise((resolve, reject) =>{
+
+            axios.put('/item/updateQty/'+id,body)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
     saveCart = async (data) =>{
         const promise = new Promise((resolve, reject) =>{
             axios.post('/cart/save',data)

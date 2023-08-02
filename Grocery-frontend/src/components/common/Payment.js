@@ -131,6 +131,7 @@ const Payment=(props)=>{
                     setSeverity("success")
                     setMessage("Payment Successfully!")
                     handleClick()
+                    deductQty(response.data)
                     deleteCart(response.data)
                     history.push({
                         pathname:'/response',
@@ -152,6 +153,16 @@ const Payment=(props)=>{
     const deleteCart=async (items)=>{
         for (var itemsKey of items.cart) {
             const response = await HomeService.deleteCart(itemsKey._id)
+        }
+    }
+
+    const deductQty=async (items)=>{
+        for (var itemsKey of items.cart) {
+            const response = await HomeService.fetchItem(itemsKey.item_Id)
+            const qty={
+                "qty_on_hand":response.data.qty_on_hand - itemsKey.qty
+            }
+            const qtyOnHand = await HomeService.updateQty(itemsKey.item_Id,qty)
         }
     }
 

@@ -84,9 +84,21 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
     }
 })
 
+router.put("/updateQty/:id", upload.single("image"), async (req, res) => {
+
+    const post = await Item.findById(req.params.id)
+    post.qty_on_hand=req.body.qty_on_hand
+
+    try {
+        const response = await post.save()
+        res.json(response)
+    }catch (error) {
+        res.send('Error : '+error)
+    }
+})
+
 router.get('/getAll/:status',async (req, res) =>{
     try {
-        console.log(req.params.status)
         if (req.params.status === "All") {
             const get = await Item.find()
             res.json(get)
