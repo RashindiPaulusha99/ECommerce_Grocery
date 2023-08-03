@@ -1,10 +1,6 @@
 import React, {useEffect, useState} from "react";
-import tomato from "../../assets/images/thumb-tomatoes.png";
-import tomatokechup from "../../assets/images/thumb-tomatoketchup.png";
-import banana from "../../assets/images/thumb-bananas.png";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import vegetables_broccoli from "../../assets/images/icon-vegetables-broccoli.png";
 import Slide from "@mui/material/Slide";
 import HomeService from "../../Services/HomeService";
 import ModalCart from "../common/ModalCart";
@@ -16,8 +12,6 @@ const BestSellingProducts=(props)=>{
     const [posts, setPosts] = useState([]);
     const [showNextButton, setShowNextButton] = useState(true);
     const [itemsToShow, setItemsToShow] = useState(10);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     const Transition = React.forwardRef(function Transition(props, ref) {
         return <Slide direction="up" ref={ref} {...props} />;
@@ -36,11 +30,8 @@ const BestSellingProducts=(props)=>{
         setOpen(false);
     };
 
-
     useEffect(()=>{
         fetchDetails();
-        setEmail(props.email)
-        setPassword(props.password)
     }, []);
 
     const fetchDetails = async()=>{
@@ -124,7 +115,7 @@ const BestSellingProducts=(props)=>{
                     </div>
                 </div>
             </div>
-            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} email={email} password={password} /> : null}
+            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} /> : null}
         </section>
     )
 }

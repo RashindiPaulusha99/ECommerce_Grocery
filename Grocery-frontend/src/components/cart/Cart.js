@@ -16,6 +16,7 @@ import Button from '@mui/material/Button';
 import DeleteModal from "../common/DeleteModal";
 import {useHistory} from "react-router-dom";
 import { withRouter } from 'react-router-dom';
+import {useSelector} from "react-redux";
 
 const Cart = (props) => {
 
@@ -30,18 +31,16 @@ const Cart = (props) => {
     const [imageDataMap, setImageDataMap] = useState({});
     const [volumeDataMap, setVolumeDataMap] = useState({});
     const [open, setOpen] = useState(false);
+    const userData = useSelector((state) => state.login.isLogged);
 
     const history = useHistory();
 
     useEffect(()=>{
         handleCart();
-        setEmail(props.location.state.email);
-        setPassword(props.location.state.password);
     },[])
 
     const handleCart=async ()=>{
-        const user = await HomeService.getUser(email,password);
-        const response = await HomeService.getCart(user.data._id);
+        const response = await HomeService.getCart(userData.id);
 
         if (response.status === 200){
             setPosts([...response.data])
@@ -107,21 +106,14 @@ const Cart = (props) => {
             setVolumeDataMap(volumeDataMap);
         };
 
-
         fetchImageData();
         fetchVolumeData();
     }, [posts]);
 
     const openHomePage=()=>{
 
-        const temp={
-            "email":email,
-            "password":password
-        }
-
         history.push({
-            pathname:'/home',
-            state: temp
+            pathname:'/home'
         });
     }
 
@@ -129,9 +121,7 @@ const Cart = (props) => {
 
         const temp={
             "total":total,
-            "items":posts,
-            "email":email,
-            "password":password
+            "items":posts
         }
 
         history.push({
@@ -142,8 +132,8 @@ const Cart = (props) => {
 
     return(
             <div>
-                <Header email={email} password={password}/>
-                <HeaderIcons email={email} password={password}/>
+                <Header/>
+                <HeaderIcons/>
                 <Box sx={{ flexGrow: 1 }}>
                     {cartLength !== 0 ?
                         <Grid container spacing={1}>

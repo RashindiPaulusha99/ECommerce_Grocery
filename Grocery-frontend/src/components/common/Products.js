@@ -20,16 +20,12 @@ const Products=(props)=>{
     const [posts, setPosts] = useState([]);
     const [showNextButton, setShowNextButton] = useState(true);
     const [itemsToShow, setItemsToShow] = useState(10);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [open, setOpen] = useState(false);
     const [id, setId] = useState("");
 
     useEffect(()=>{
         fetchDetails(props.location.state.status);
         setStatus(props.location.state.status)
-        setEmail(props.location.state.email)
-        setPassword(props.location.state.password)
     }, []);
 
     const fetchDetails = async(status)=>{
@@ -82,8 +78,8 @@ const Products=(props)=>{
 
     return(
         <Fragment>
-            <ProductsHeader email={email} password={password}/>
-            <HeaderIcons email={email} password={password}/>
+            <ProductsHeader/>
+            <HeaderIcons />
             <section className="overflow-hidden">
                 <div className="container-fluid">
                     <div className="row">
@@ -151,7 +147,7 @@ const Products=(props)=>{
                         </div>
                     </div>
                 </div>
-                {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} email={email} password={password} /> : null}
+                {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} /> : null}
             </section>
         </Fragment>
     )

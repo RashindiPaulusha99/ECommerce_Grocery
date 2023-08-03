@@ -11,6 +11,8 @@ import image from  '../../assets/images/LoginImage.jpg';
 import {useHistory} from "react-router-dom";
 import HomeService from "../../Services/HomeService";
 import SnackBar from "../common/SnackBar";
+import { useSelector, useDispatch } from 'react-redux';
+import { login_Actions } from '../../store/action/login_action';
 
 const RedditTextField = styled((props) => (
     <TextField InputProps={{ disableUnderline: true }} {...props} />
@@ -46,6 +48,7 @@ const Login=()=>{
     const [state, setState] = useState(false);
     const [severity, setSeverity] = useState('warning');
     const [message, setMessage] = useState('All fields are required!');
+    const dispatch = useDispatch();
 
     const handleClick = () => {
         setState(true);
@@ -72,33 +75,23 @@ const Login=()=>{
 
             if (response.status === 200 && response.data !== null){
 
+                dispatch(login_Actions.login({ id: response.data._id }));
+
                 if (response.data.role === "USER"){
                     setSeverity("success")
                     setMessage("Logged Successfully!")
                     handleClick()
 
-                    const temp={
-                        "email":email,
-                        "password":password
-                    }
-
                     history.push({
-                        pathname:'/home',
-                        state: temp
+                        pathname:'/home'
                     });
                 }else if (response.data.role === "OWNER" || response.data.role === "ADMIN"){
                     setSeverity("success")
                     setMessage("Logged Successfully!")
                     handleClick()
 
-                    const temp={
-                        "email":email,
-                        "password":password
-                    }
-
                     history.push({
-                        pathname:'/dashboard',
-                        state: temp
+                        pathname:'/dashboard'
                     });
                 }
 

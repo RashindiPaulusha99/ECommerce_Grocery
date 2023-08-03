@@ -20,6 +20,7 @@ import HomeService from "../../Services/HomeService";
 import { makeStyles } from "@material-ui/core/styles";
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
 import {useHistory} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -40,8 +41,6 @@ const ModalCart=(props)=>{
     const[id, setId]=useState('')
     const[image, setImage]=useState('')
     const[name, setName]=useState('')
-    const[email, setEmail]=useState('')
-    const[password, setPassword]=useState('')
     const[description, setDescription]=useState('')
     const[category, setCategory]=useState('')
     const[qtyOnHand, setQtyOnHand]=useState(0)
@@ -51,15 +50,12 @@ const ModalCart=(props)=>{
     const[unitOfVolume, setUnitOfVolume]=useState('')
     const[unitPrice, setUnitPrice]=useState(0)
     const [countCart, setCountCart] = useState(1);
+    const userData = useSelector((state) => state.login.isLogged);
 
     const style = useStyle();
 
     useEffect(()=>{
-        console.log(props.email)
-        console.log(props.password)
         test(props.id)
-        setEmail(props.email)
-        setPassword(props.password)
     },[])
 
     const test=async (e)=>{
@@ -101,11 +97,8 @@ const ModalCart=(props)=>{
             price = unitPrice;
         }
 
-        const user = await HomeService.getUser(email,password);
-        console.log(user)
-
         const cart = {
-            "user_Id": user.data._id,
+            "user_Id": userData.id,
             "item_Id": id,
             "name": name,
             "brand": brand,
@@ -114,12 +107,7 @@ const ModalCart=(props)=>{
             "total_units_price": price * countCart
         };
 
-        const temp={
-            "email":email,
-            "password":password
-        }
-
-        const carts = await HomeService.getCart(user.data._id);
+        const carts = await HomeService.getCart(userData.id);
         console.log(carts)
 
         if (carts.data.length !== 0) {
@@ -127,7 +115,7 @@ const ModalCart=(props)=>{
             for (let dataKey in carts.data) {
                 if (id === carts.data[dataKey].item_Id) {
                     const updateCart = {
-                        "user_Id": user.data._id,
+                        "user_Id": userData.id,
                         "item_Id": id,
                         "name": name,
                         "brand": brand,
@@ -141,8 +129,7 @@ const ModalCart=(props)=>{
                         itemFound = true;
 
                         history.push({
-                            pathname: '/cart',
-                            state: temp
+                            pathname: '/cart'
                         });
                         break;
                     }
@@ -154,8 +141,7 @@ const ModalCart=(props)=>{
 
                 if (response.status === 200) {
                     history.push({
-                        pathname: '/cart',
-                        state: temp
+                        pathname: '/cart'
                     });
                 }
             }
@@ -164,8 +150,7 @@ const ModalCart=(props)=>{
 
             if (response.status === 200) {
                 history.push({
-                    pathname: '/cart',
-                    state: temp
+                    pathname: '/cart'
                 });
             }
         }

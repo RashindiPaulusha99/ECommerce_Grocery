@@ -159,6 +159,18 @@ class HomeService {
         return await promise
     }
 
+    getAllPayments = async () =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/payment/getAll')
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
     saveUser = async (data) =>{
         const promise = new Promise((resolve, reject) =>{
             axios.post('/user/register',data)
@@ -183,9 +195,21 @@ class HomeService {
         return await promise
     }
 
-    getUser = async (email,password) =>{
+    getUser = async (id) =>{
         const promise = new Promise((resolve, reject) =>{
-            axios.get('/user/get/'+email+'/'+password)
+            axios.get('/user/get/'+id)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    getAllUser = async () =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.get('/user/getAll')
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{

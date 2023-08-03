@@ -16,22 +16,12 @@ import Menu from "@mui/material/Menu";
 
 const  CategoryMenu=(props)=>{
 
-    const [email, setEmail]=useState('')
-    const [password, setPassword]=useState('')
     const [status, setStatus]=useState('')
-
-    useEffect(()=>{
-        setEmail(props.email);
-        setPassword(props.password);
-    })
 
     const history = useHistory();
 
     const handleLoadProducts=(status)=>{
-        console.log(status)
         const temp={
-            "email":email,
-            "password":password,
             "status":status
         }
         console.log(temp)

@@ -16,6 +16,7 @@ import {useHistory, withRouter} from 'react-router-dom';
 import Button from "@mui/material/Button";
 import HomeService from "../../Services/HomeService";
 import SnackBar from "./SnackBar";
+import {useSelector} from "react-redux";
 
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -58,8 +59,6 @@ const Payment=(props)=>{
     const [expanded, setExpanded] = useState('panel1');
     const [total, setTotal] = useState(0);
     const [items, setItems] = useState([]);
-    const [password, setPassword] = useState('');
-    const [userEmail, setUserEmail] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [province, setProvince] = useState('');
@@ -75,6 +74,7 @@ const Payment=(props)=>{
     const [state, setState] = useState(false);
     const [severity, setSeverity] = useState('warning');
     const [message, setMessage] = useState('All fields are required!');
+    const userData = useSelector((state) => state.login.isLogged);
 
     const history = useHistory();
 
@@ -85,8 +85,6 @@ const Payment=(props)=>{
     useEffect(()=>{
         setTotal(props.location.state.total)
         setItems(props.location.state.items)
-        setUserEmail(props.location.state.email)
-        setPassword(props.location.state.password)
     })
 
     const handleClick = () => {
@@ -110,38 +108,24 @@ const Payment=(props)=>{
             const year = currentDate.getFullYear();
             const formattedDate = `${day}-${month}-${year}`;
 
-            const user = await HomeService.getUser(userEmail,password);
+            const data = {
+                "user_Id":userData.id,
+                "cart":items,
+                "payments":total,
+                "payment_Date":formattedDate
+            }
 
-            if (user.status === 200 ){
-                const data = {
-                    "user_Id":user.data._id,
-                    "cart":items,
-                    "payments":total,
-                    "payment_Date":formattedDate
-                }
+            const response  = await HomeService.savePayment(data)
 
-                const temp={
-                    "email":email,
-                    "password":password
-                }
-
-                const response  = await HomeService.savePayment(data)
-
-                if (response.status === 200){
-                    setSeverity("success")
-                    setMessage("Payment Successfully!")
-                    handleClick()
-                    deductQty(response.data)
-                    deleteCart(response.data)
-                    history.push({
-                        pathname:'/response',
-                        state: temp
-                    });
-                }else {
-                    setSeverity("error")
-                    setMessage("Payment Failed!")
-                    handleClick()
-                }
+            if (response.status === 200){
+                setSeverity("success")
+                setMessage("Payment Successfully!")
+                handleClick()
+                deductQty(response.data)
+                deleteCart(response.data)
+                history.push({
+                    pathname:'/response'
+                });
             }else {
                 setSeverity("error")
                 setMessage("Payment Failed!")
@@ -171,8 +155,8 @@ const Payment=(props)=>{
 
     return(
         <Fragment>
-            <Header email={email} password={password}/>
-            <HeaderIcons email={email} password={password}/>
+            <Header/>
+            <HeaderIcons/>
             <div style={{width:'100%',padding:24}}>
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">

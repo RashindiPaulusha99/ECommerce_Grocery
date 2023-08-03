@@ -8,21 +8,21 @@ import grocery from "../assets/images/grocery.jpg";
 import CategoryMenu from "../components/common/CategoryMenu";
 import ProfileMenu from "../components/common/ProfileMenu";
 import HomeService from "../Services/HomeService";
+import {useSelector} from "react-redux";
 
 const Header=(props)=>{
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [anchorEl2, setAnchorEl2] = useState(null);
     const [cart, setCart] = useState(0);
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [userId, setUserId] = useState('');
+    const userData = useSelector((state) => state.login.isLogged);
 
     const history = useHistory();
 
     useEffect(()=>{
         handleCartSize();
-        setEmail(props.email)
-        setPassword(props.password)
+        setUserId(userData.id)
     })
 
     const opens = Boolean(anchorEl);
@@ -45,34 +45,19 @@ const Header=(props)=>{
     };
 
     const handleCart=()=>{
-
-        const temp={
-            "email":email,
-            "password":password
-        }
-
         history.push({
-            pathname:'/cart',
-            state: temp
+            pathname:'/cart'
         });
     }
 
     const  handleOpenHome=()=>{
-
-        const temp={
-            "email":email,
-            "password":password
-        }
-
         history.push({
-            pathname:'/home',
-            state: temp
+            pathname:'/home'
         });
     }
 
     const handleCartSize=async ()=>{
-        const user = await HomeService.getUser(email,password);
-        const response = await HomeService.getCart(user.data._id);
+        const response = await HomeService.getCart(userId);
         if (response.status === 200){
             setCart(response.data.length)
         }

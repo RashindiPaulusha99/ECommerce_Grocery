@@ -20,29 +20,19 @@ import Badges from "../components/Home/Badges";
 import Services from "../components/Home/Services";
 import Footer from "../layouts/Footer";
 
-const Home=(props)=>{
-
-     const [email,setEmail]=useState('')
-     const [password,setPassword]=useState('')
-
-     useEffect(()=>{
-        setEmail(props.location.state.email)
-        setPassword(props.location.state.password)
-         console.log(email)
-         console.log(password)
-     })
+const Home=()=>{
 
     return(
         <Fragment>
-            <HeaderIcons email={email} password={password}/>
+            <HeaderIcons/>
             <Search/>
-            <Header email={email} password={password}/>
+            <Header/>
             <HeaderBanner/>
             <Category/>
             <NewlyArrivedBrands/>
-            <AllProducts email={email} password={password}/>
+            <AllProducts/>
             <MiddleBanners/>
-            <BestSellingProducts email={email} password={password}/>
+            <BestSellingProducts/>
             <Form/>
             <Blog/>
             <Badges/>

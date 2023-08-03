@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import HomeService from "../../Services/HomeService";
 import Slide from '@mui/material/Slide';
 import ModalCart from "../common/ModalCart";
+import {useSelector} from "react-redux";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -18,9 +19,13 @@ const AllProducts=(props)=>{
     const [showNextButton, setShowNextButton] = useState(true);
     const [open, setOpen] = useState(false);
     const [id, setId] = useState("");
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [itemsToShow, setItemsToShow] = useState(10);
+    const userData = useSelector((state) => state.login.isLogged);
+
+
+    useEffect(()=>{
+        fetchDetails();
+    }, []);
 
     const handleClickOpen =async (e) => {
         setId(e)
@@ -32,20 +37,11 @@ const AllProducts=(props)=>{
         setOpen(false);
       };
 
-
-    useEffect(()=>{
-        fetchDetails();
-        setEmail(props.email)
-        setPassword(props.password)
-        console.log(email)
-        console.log(password)
-    }, []);
-
     const fetchDetails = async()=>{
         const response = await HomeService.fetchItems(status);
 
         if (response.status === 200){
-            setPosts(response.data);
+            setPosts([...response.data]);
         }
     }
 
@@ -126,7 +122,7 @@ const AllProducts=(props)=>{
                 </div>
             </div>
 
-            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} email={email} password={password} /> : null}
+            {open ? <ModalCart open={open} handleClickOpen={handleClickOpen} handleClose={handleClose} id={id} Transition={Transition} /> : null}
         </section>
     )
 }

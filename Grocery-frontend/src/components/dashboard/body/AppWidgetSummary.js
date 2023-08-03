@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from 'prop-types';
 import { alpha, styled } from '@mui/material/styles';
 import { Card, Typography } from '@mui/material';
-import Iconify from '../../components/dashboard/Iconify';
+import Iconify from './Iconify';
 import { useTheme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
@@ -28,13 +28,13 @@ AppWidgetSummary.propTypes = {
   sx: PropTypes.object,
 };
 
-export default function AppWidgetSummary({ title, total, icon, color = 'primary', sx, ...other }) {
+export default function AppWidgetSummary({count, title, total, icon, color = 'primary', sx, ...other }) {
     const theme = useTheme();
   return (
     <Card
       sx={{
         py: 5,
-        boxShadow: 0,
+        boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
         textAlign: 'center',
         color: (theme) => theme.palette[color].darker,
         bgcolor: (theme) => theme.palette[color].lighter,
@@ -55,7 +55,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
         <Iconify icon={icon} width={24} height={24} />
       </StyledIcon>
 
-      <Typography variant="h3">100</Typography>
+      <Typography variant="h4">{count}</Typography>
 
       <Typography variant="subtitle2" sx={{ opacity: 0.72 }}>
         {title}

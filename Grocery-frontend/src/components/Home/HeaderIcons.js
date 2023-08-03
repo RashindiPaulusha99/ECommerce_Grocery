@@ -15,15 +15,7 @@ import Button from '@mui/material/Button';
 import Cart from "../cart/Cart";
 import {useHistory} from "react-router-dom";
 
-const HeaderIcons=(props)=>{
-
-    const [email,setEmail]=useState('')
-    const [password,setPassword]=useState('')
-
-    useEffect(()=>{
-        setEmail(props.email)
-        setPassword(props.password)
-    })
+const HeaderIcons=()=>{
 
     const history = useHistory();
 
