@@ -17,6 +17,9 @@ import DashboardHeader from "./header/DashboardHeader";
 import DrawerList from "./DrawerList";
 import DashboardBody from "./body/DashboardBody";
 import UserBody from "./body/UserBody";
+import CategoryBody from "./body/CategoryBody";
+import BrandBody from "./body/BrandBody";
+import ProductBody from "./body/ProductBody";
 
 const drawerWidth = 240;
 
@@ -61,98 +64,11 @@ const Dashboard=(props)=>{
                 {/*body*/}
                 {clickedColour === 'dashboard' ? <DashboardBody/> :
                     clickedColour === 'user' ? <UserBody/> :
-                        clickedColour === 'category' ? <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
-                    <Toolbar />
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
-                        </Grid>
-                    </Grid>
-                </Box> : clickedColour === 'brand' ? <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
-                    <Toolbar />
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
-                        </Grid>
-                    </Grid>
-                </Box> : clickedColour === 'product' ? <Box component="main" sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}>
-                    <Toolbar />
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
-                        </Grid>
-                    </Grid>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={3}>
-                            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
-                        </Grid>
-                    </Grid>
-                </Box> : null}
+                        clickedColour === 'category' ? <CategoryBody/> :
+                            clickedColour === 'brand' ? <BrandBody/> :
+                                clickedColour === 'product' ? <ProductBody/> :
+                                    null
+                }
             </Box>
         </Fragment>
     )

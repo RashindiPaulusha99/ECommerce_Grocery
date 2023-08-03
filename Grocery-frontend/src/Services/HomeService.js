@@ -15,12 +15,36 @@ class HomeService {
         return await promise
     }
 
+    deleteBrand = async (id) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.delete('/brand/delete/'+id)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
     fetchCategory = async ()=>{
 
         const promise = new Promise((resolve, reject) =>{
 
             axios.get('/category/getAll',{
             })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    deleteCategory = async (id) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.delete('/category/delete/'+id)
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{
@@ -62,6 +86,18 @@ class HomeService {
         const promise = new Promise((resolve, reject) =>{
             axios.get('/item/getOrder/'+status+'/'+order,{
             })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    deleteItem = async (id) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.delete('/item/delete/'+id)
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{
@@ -210,6 +246,18 @@ class HomeService {
     getAllUser = async () =>{
         const promise = new Promise((resolve, reject) =>{
             axios.get('/user/getAll')
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    deleteUser = async (id) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.delete('/user/delete/'+id)
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{
