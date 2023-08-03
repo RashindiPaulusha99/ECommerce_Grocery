@@ -4,15 +4,8 @@ import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import logo from '../../assets/images/grocery.jpg'
-import Grid from '@mui/material/Grid';
-import AppWidgetSummary from "./body/AppWidgetSummary";
-import {useSelector} from "react-redux";
-import HomeService from "../../Services/HomeService";
-import {useHistory} from "react-router-dom";
 import DashboardHeader from "./header/DashboardHeader";
 import DrawerList from "./DrawerList";
 import DashboardBody from "./body/DashboardBody";

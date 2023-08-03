@@ -97,4 +97,14 @@ router.get('/get/:id',async (req, res) =>{
     }
 })
 
+router.get('/getAll/brands', async (req, res) => {
+    try {
+        const brands = await Brand.find({}).select('brand');
+        const brandsNames = brands.map((brand) => brand.brand);
+        res.json(brandsNames);
+    }catch (error) {
+        res.send('Error : '+error)
+    }
+});
+
 module.exports = router

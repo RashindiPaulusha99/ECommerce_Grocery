@@ -15,9 +15,48 @@ class HomeService {
         return await promise
     }
 
+    saveBrand = async (data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.post('/brand/save',data)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
     deleteBrand = async (id) =>{
         const promise = new Promise((resolve, reject) =>{
             axios.delete('/brand/delete/'+id)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    fetchAllBrands = async ()=>{
+
+        const promise = new Promise((resolve, reject) =>{
+
+            axios.get('/brand/getAll/brands',{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    saveCategory = async (data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.post('/category/save',data)
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{
@@ -32,6 +71,21 @@ class HomeService {
         const promise = new Promise((resolve, reject) =>{
 
             axios.get('/category/getAll',{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    fetchAllCategories = async ()=>{
+
+        const promise = new Promise((resolve, reject) =>{
+
+            axios.get('/category/getAll/categories',{
             })
                 .then((res) =>{
                     return resolve(res)
@@ -98,6 +152,18 @@ class HomeService {
     deleteItem = async (id) =>{
         const promise = new Promise((resolve, reject) =>{
             axios.delete('/item/delete/'+id)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    saveItem = async (data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.post('/item/save',data)
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{

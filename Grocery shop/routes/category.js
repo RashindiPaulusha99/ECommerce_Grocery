@@ -41,7 +41,7 @@ router.post("/save", upload.single("image"), async (req, res) => {
             contentType:'image/png'
         },
     });
-
+    
     try {
         const save = await category.save()
         res.json(save)
@@ -71,6 +71,16 @@ router.get('/getAll', async (req, res) => {
     try {
         const get = await Category.find()
         res.json(get)
+    }catch (error) {
+        res.send('Error : '+error)
+    }
+});
+
+router.get('/getAll/categories', async (req, res) => {
+    try {
+        const categories = await Category.find({}).select('category');
+        const categoryNames = categories.map((category) => category.category);
+        res.json(categoryNames);
     }catch (error) {
         res.send('Error : '+error)
     }

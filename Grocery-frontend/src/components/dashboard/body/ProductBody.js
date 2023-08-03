@@ -1,20 +1,25 @@
 import React, {useEffect, useState} from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
-import AppWidgetSummary from "./AppWidgetSummary";
 import Box from "@mui/material/Box";
 import {IconButton, TableCell} from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import HomeService from "../../../Services/HomeService";
 import {DataGrid} from "@mui/x-data-grid";
 import SnackBar from "../../common/SnackBar";
-import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import DeletePopUp from "../../common/DeletePopUp";
+import AddProductModal from "./AddProductModal";
+import Slide from "@mui/material/Slide";
+import ViewProductModal from "./ViewProductModal";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const ProductBody=()=>{
 
@@ -23,6 +28,8 @@ const ProductBody=()=>{
     const [state, setState] = useState(false);
     const [severity, setSeverity] = useState('warning');
     const [message, setMessage] = useState('All fields are required!');
+    const [openAdd, setOpenAdd] = useState(false);
+    const [openView, setOpenView] = useState(false);
 
     const [open, setOpen] = React.useState(false);
     const handleOpenModal = () => setOpen(true);
@@ -34,6 +41,22 @@ const ProductBody=()=>{
 
     const handleClose = () => {
         setState(false);
+    };
+
+    const handleCloseOpen = () => {
+        setOpenAdd(false);
+    };
+
+    const handleClickOpen =async () => {
+        setOpenAdd(true);
+    };
+
+    const handleCloseView = () => {
+        setOpenView(false);
+    };
+
+    const handleClickView =async () => {
+        setOpenView(true);
     };
 
     const columns = [
@@ -64,7 +87,8 @@ const ProductBody=()=>{
     };
 
     const handleView = async (tId) => {
-
+        setTid(tId)
+        setOpenView(true)
         console.log(tId);
     };
 
@@ -77,7 +101,7 @@ const ProductBody=()=>{
         setOpen(false)
         const response = await HomeService.deleteItem(tId);
         if (response.status === 200){
-            handleGetUsers();
+            fetchDetails();
             setSeverity("success")
             setMessage("Successfully Deleted!")
             handleClick()
@@ -85,13 +109,14 @@ const ProductBody=()=>{
     }
 
     useEffect(()=>{
-        handleGetUsers()
+        fetchDetails()
     },[])
 
-    const handleGetUsers=async ()=>{
+    const fetchDetails=async ()=>{
         try {
             const response = await HomeService.fetchItems("All");
-            const newRows = response.data.map((dataKey,index) => ({
+            const reversedData = response.data.reverse();
+            const newRows = reversedData.map((dataKey,index) => ({
                 tId:dataKey._id,
                 id: index + 1,
                 name: dataKey.name,
@@ -117,7 +142,7 @@ const ProductBody=()=>{
                     <Typography variant="h5" gutterBottom>Items</Typography>
                 </Grid>
                 <Grid item xs={6} sm={6} md={6} className='mt-5 mb-3' style={{display:'flex',justifyContent:'flex-end'}}>
-                    <Button variant="contained" startIcon={<AddIcon />}>
+                    <Button variant="contained" style={{backgroundColor:'black'}} startIcon={<AddIcon />} onClick={handleClickOpen}>
                         new item
                     </Button>
                 </Grid>
@@ -141,6 +166,8 @@ const ProductBody=()=>{
             </Grid>
             <SnackBar state={state} handleClose={handleClose} message={message} severity={severity}/>
             <DeletePopUp open={open} handleCloseModal={handleCloseModal} deleteUser={deleteUser}/>
+            {openAdd ? <AddProductModal openAdd={openAdd} handleClickOpen={handleClickOpen} handleCloseOpen={handleCloseOpen} Transition={Transition} fetchDetails={fetchDetails}/> : null}
+            {openView ? <ViewProductModal openView={openView} handleClickView={handleClickView} handleCloseView={handleCloseView} Transition={Transition} id={tId}/> : null}
         </Box>
     )
 }

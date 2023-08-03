@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
-import AppWidgetSummary from "./AppWidgetSummary";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
@@ -13,6 +12,12 @@ import Chip from '@mui/material/Chip';
 import IconButton from '@mui/material/IconButton';
 import DeletePopUp from "../../common/DeletePopUp";
 import SnackBar from "../../common/SnackBar";
+import AddBrandModal from "./AddBrandModal";
+import Slide from "@mui/material/Slide";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const BrandBody=()=>{
 
@@ -22,6 +27,8 @@ const BrandBody=()=>{
     const [severity, setSeverity] = useState('warning');
     const [message, setMessage] = useState('All fields are required!');
     const [open, setOpen] = useState(false);
+    const [openAdd, setOpenAdd] = useState(false);
+
     const handleOpenModal = () => setOpen(true);
     const handleCloseModal = () => setOpen(false);
 
@@ -31,6 +38,14 @@ const BrandBody=()=>{
 
     const handleClose = () => {
         setState(false);
+    };
+
+    const handleCloseOpen = () => {
+        setOpenAdd(false);
+    };
+
+    const handleClickOpen =async () => {
+        setOpenAdd(true);
     };
 
     useEffect(()=>{
@@ -81,7 +96,7 @@ const BrandBody=()=>{
                     <Typography variant="h5" gutterBottom>Brands</Typography>
                 </Grid>
                 <Grid item xs={6} sm={6} md={6} className='mt-5 mb-3' style={{display:'flex',justifyContent:'flex-end'}}>
-                    <Button variant="contained" startIcon={<AddIcon />}>
+                    <Button variant="contained" style={{backgroundColor:'black'}} startIcon={<AddIcon />} onClick={handleClickOpen}>
                         new brand
                     </Button>
                 </Grid>
@@ -90,7 +105,8 @@ const BrandBody=()=>{
                         <div style={{
                             py: 5,
                             boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
-                            textAlign: 'center',}}>
+                            textAlign: 'center',
+                            borderRadius:'5%',}}>
                             <img src={'data:image/jpeg;base64,'+arrayBufferToBase64(image.data.data)} style={{margin: 'auto',
                                 display: 'flex',
                                 alignItems: 'center',
@@ -120,6 +136,7 @@ const BrandBody=()=>{
             </Grid>
             <SnackBar state={state} handleClose={handleClose} message={message} severity={severity}/>
             <DeletePopUp open={open} handleCloseModal={handleCloseModal} deleteUser={deleteUser}/>
+            {openAdd ? <AddBrandModal openAdd={openAdd} handleClickOpen={handleClickOpen} handleCloseOpen={handleCloseOpen} Transition={Transition} fetchDetails={fetchDetails}/> : null}
         </Box>
     )
 }

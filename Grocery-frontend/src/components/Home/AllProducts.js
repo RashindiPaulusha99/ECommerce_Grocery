@@ -35,7 +35,7 @@ const AllProducts=(props)=>{
     const handleClose = () => {
         setId("")
         setOpen(false);
-      };
+    };
 
     const fetchDetails = async()=>{
         const response = await HomeService.fetchItems(status);
