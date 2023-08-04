@@ -6,13 +6,13 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import logo from '../../assets/images/grocery.jpg'
-import DashboardHeader from "./header/DashboardHeader";
+import DashboardHeader from "../../layouts/dashboard/DashboardHeader";
 import DrawerList from "./DrawerList";
-import DashboardBody from "./body/DashboardBody";
-import UserBody from "./body/UserBody";
-import CategoryBody from "./body/CategoryBody";
-import BrandBody from "./body/BrandBody";
-import ProductBody from "./body/ProductBody";
+import DashboardBody from "./body/dashboard/DashboardBody";
+import UserBody from "./body/user/UserBody";
+import CategoryBody from "./body/category/CategoryBody";
+import BrandBody from "./body/brand/BrandBody";
+import ProductBody from "./body/item/ProductBody";
 
 const drawerWidth = 240;
 

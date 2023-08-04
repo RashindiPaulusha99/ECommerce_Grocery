@@ -5,14 +5,14 @@ import Box from "@mui/material/Box";
 import { DataGrid } from '@mui/x-data-grid';
 import Button from '@mui/material/Button';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import HomeService from "../../../Services/HomeService";
+import HomeService from "../../../../Services/HomeService";
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import {TableCell, IconButton,} from '@mui/material';
-import SnackBar from "../../common/SnackBar";
+import SnackBar from "../../../common/alert/SnackBar";
 import AddIcon from "@mui/icons-material/Add";
 import Chip from '@mui/material/Chip';
-import DeletePopUp from "../../common/DeletePopUp";
+import DeletePopUp from "../../../common/model/DeletePopUp";
 
 const UserBody=()=>{
 

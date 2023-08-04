@@ -1,6 +1,6 @@
 import React,{Fragment,useState,useEffect} from "react";
-import Header from "../../layouts/Header";
-import HeaderIcons from "../Home/HeaderIcons";
+import Header from "../layouts/home/Header";
+import HeaderIcons from "../components/Home/HeaderIcons";
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
@@ -14,8 +14,8 @@ import AttachMoneyOutlinedIcon from '@mui/icons-material/AttachMoneyOutlined';
 import Box from '@mui/material/Box';
 import {useHistory, withRouter} from 'react-router-dom';
 import Button from "@mui/material/Button";
-import HomeService from "../../Services/HomeService";
-import SnackBar from "./SnackBar";
+import HomeService from "../Services/HomeService";
+import SnackBar from "../components/common/alert/SnackBar";
 import {useSelector} from "react-redux";
 
 const Accordion = styled((props) => (

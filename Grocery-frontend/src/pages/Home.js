@@ -11,14 +11,14 @@ import HeaderBanner from "../components/Home/HeaderBanner";
 import MiddleBanners from "../components/Home/MiddleBanners";
 import Form from "../components/Home/Form";
 import HeaderIcons from "../components/Home/HeaderIcons";
-import Header from "../layouts/Header";
+import Header from "../layouts/home/Header";
 import Search from "../components/Home/Search";
 import BestSellingProducts from "../components/Home/BestSellingProducts";
 import Blog from "../components/Home/Blog";
 import AllProducts from "../components/Home/AllProducts";
 import Badges from "../components/Home/Badges";
 import Services from "../components/Home/Services";
-import Footer from "../layouts/Footer";
+import Footer from "../layouts/home/Footer";
 
 const Home=()=>{
 

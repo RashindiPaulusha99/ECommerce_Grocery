@@ -2,16 +2,16 @@ import React, {useEffect, useState} from "react";
 import { useHistory,withRouter } from "react-router-dom";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import vegetables from "../../assets/images/icons8-vegetables-35.png";
+import vegetables from "../../../assets/images/icons8-vegetables-35.png";
 import Divider from "@mui/material/Divider";
-import fruits from "../../assets/images/icons8-fish-35.png";
-import beverages from "../../assets/images/icons8-beverages-35.png";
-import milk from "../../assets/images/icons8-milk-35.png";
-import spices from "../../assets/images/icons8-biscuits-35.png";
-import meats from "../../assets/images/icons8-steak-35.png";
-import fish from "../../assets/images/icons8-fish-35.png";
-import backed from "../../assets/images/icons8-baked-35.png";
-import fastFoods from "../../assets/images/icons8-biscuits-35.png";
+import fruits from "../../../assets/images/icons8-fish-35.png";
+import beverages from "../../../assets/images/icons8-beverages-35.png";
+import milk from "../../../assets/images/icons8-milk-35.png";
+import spices from "../../../assets/images/icons8-biscuits-35.png";
+import meats from "../../../assets/images/icons8-steak-35.png";
+import fish from "../../../assets/images/icons8-fish-35.png";
+import backed from "../../../assets/images/icons8-baked-35.png";
+import fastFoods from "../../../assets/images/icons8-biscuits-35.png";
 import Menu from "@mui/material/Menu";
 
 const  CategoryMenu=(props)=>{

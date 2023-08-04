@@ -2,26 +2,27 @@ import React, {useEffect, useState} from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import {IconButton, TableCell} from "@mui/material";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import HomeService from "../../../Services/HomeService";
-import SnackBar from "../../common/SnackBar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import AddIcon from "@mui/icons-material/Add";
 import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
-import DeletePopUp from "../../common/DeletePopUp";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import HomeService from "../../../../Services/HomeService";
+import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import DeletePopUp from "../../../common/model/DeletePopUp";
+import SnackBar from "../../../common/alert/SnackBar";
+import AddBrandModal from "./AddBrandModal";
 import Slide from "@mui/material/Slide";
-import AddCategoryModal from "./AddCategoryModal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CategoryBody=()=>{
+const BrandBody=()=>{
 
-    const [posts, setPosts] = useState([]);
     const [id, setId] = useState('');
+    const [posts, setPosts] = useState([]);
     const [state, setState] = useState(false);
     const [severity, setSeverity] = useState('warning');
     const [message, setMessage] = useState('All fields are required!');
@@ -30,19 +31,6 @@ const CategoryBody=()=>{
 
     const handleOpenModal = () => setOpen(true);
     const handleCloseModal = () => setOpen(false);
-
-    useEffect(()=>{
-        fetchDetails();
-    }, []);
-
-    const fetchDetails = async()=>{
-        const response = await HomeService.fetchCategory();
-
-        if (response.status === 200){
-            const reversedData = response.data.reverse();
-            setPosts(reversedData);
-        }
-    }
 
     const handleClick = () => {
         setState(true);
@@ -60,6 +48,19 @@ const CategoryBody=()=>{
         setOpenAdd(true);
     };
 
+    useEffect(()=>{
+        fetchDetails();
+    }, []);
+
+    const fetchDetails = async()=>{
+        const response = await HomeService.fetchBrand();
+
+        if (response.status === 200){
+            const reversedData = response.data.reverse();
+            setPosts(reversedData);
+        }
+    }
+
     const arrayBufferToBase64 = (buffer) => {
         var binary = '';
         var bytes = [].slice.call(new Uint8Array(buffer));
@@ -67,19 +68,18 @@ const CategoryBody=()=>{
         return window.btoa(binary);
     };
 
-    const handleEditCategory=async (id)=>{
-        /*setOpen(true)*/
-        setId(id);
+    const handleEditBrand=async (id)=>{
+        //const response = await HomeService.
     }
 
-    const handleDeleteCategory=async (id)=>{
+    const handleDeleteBrand=async (id)=>{
         setOpen(true)
         setId(id);
     }
 
     const deleteUser=async ()=>{
         setOpen(false)
-        const response = await HomeService.deleteCategory(id);
+        const response = await HomeService.deleteBrand(id);
         if (response.status === 200){
             fetchDetails();
             setSeverity("success")
@@ -93,38 +93,41 @@ const CategoryBody=()=>{
             <Toolbar />
             <Grid container spacing={3}>
                 <Grid item xs={6} sm={6} md={6} className='mt-5 mb-4' style={{display:'flex',justifyContent:'flex-start'}}>
-                    <Typography variant="h5" gutterBottom>Categories</Typography>
+                    <Typography variant="h5" gutterBottom>Brands</Typography>
                 </Grid>
                 <Grid item xs={6} sm={6} md={6} className='mt-5 mb-3' style={{display:'flex',justifyContent:'flex-end'}}>
-                    <Button variant="contained" size="medium" style={{backgroundColor:'black'}} startIcon={<AddIcon />} onClick={handleClickOpen}>
-                        new category
+                    <Button variant="contained" style={{backgroundColor:'black'}} startIcon={<AddIcon />} onClick={handleClickOpen}>
+                        new brand
                     </Button>
                 </Grid>
-                {posts.map(({_id,category,image}, index) =>(
+                {posts.map(({_id, brand,category,image}, index) =>(
                     <Grid item xs={12} sm={6} md={3}>
                         <div style={{
                             py: 5,
                             boxShadow: 'rgba(149, 157, 165, 0.2) 0px 8px 24px',
                             textAlign: 'center',
-                            borderRadius:'7%',}}>
+                            borderRadius:'5%',}}>
                             <img src={'data:image/jpeg;base64,'+arrayBufferToBase64(image.data.data)} style={{margin: 'auto',
                                 display: 'flex',
                                 alignItems: 'center',
-                                width: 56,
-                                height: 94,
+                                width: 120,
+                                height: 120,
                                 justifyContent: 'center',
                                 marginTop: 10,
-                                paddingTop:35,
-                                marginBottom: 25}} alt='categories'/>
-                            <Typography variant="h5" sx={{ paddingBottom: 3 }}>{category}</Typography>
-                            <IconButton color="secondary" size="small" aria-label="edit" onClick={()=>{
-                                handleEditCategory(_id)
-                            }} className='mb-3 me-2' style={{backgroundColor:'lavender',}}>
+                                paddingTop:20,
+                                marginBottom: 10}} alt='brands'/>
+                            <Typography variant="h5" sx={{ paddingBottom: 1 }}>{brand}</Typography>
+                            <Typography variant="subtitle2" sx={{ paddingBottom: 2 }}>
+                                <Chip label={category} />
+                            </Typography>
+                            <IconButton size="small" aria-label="edit" className='mb-3 me-2' onClick={()=>{
+                                handleEditBrand(_id)
+                            }} style={{backgroundColor:'ghostwhite',}}>
                                 <EditIcon />
                             </IconButton>
-                            <IconButton color="error" size="small" onClick={()=>{
-                                handleDeleteCategory(_id)
-                            }} aria-label="edit" className='mb-3 me-2' style={{backgroundColor:'peachpuff',}}>
+                            <IconButton size="small" aria-label="edit" className='mb-3 me-2' onClick={()=>{
+                                handleDeleteBrand(_id)
+                            }}  style={{backgroundColor:'ghostwhite',}}>
                                 <DeleteOutlineIcon />
                             </IconButton>
                         </div>
@@ -133,9 +136,9 @@ const CategoryBody=()=>{
             </Grid>
             <SnackBar state={state} handleClose={handleClose} message={message} severity={severity}/>
             <DeletePopUp open={open} handleCloseModal={handleCloseModal} deleteUser={deleteUser}/>
-            {openAdd ? <AddCategoryModal openAdd={openAdd} handleClickOpen={handleClickOpen} handleCloseOpen={handleCloseOpen} Transition={Transition} fetchDetails={fetchDetails}/> : null}
+            {openAdd ? <AddBrandModal openAdd={openAdd} handleClickOpen={handleClickOpen} handleCloseOpen={handleCloseOpen} Transition={Transition} fetchDetails={fetchDetails}/> : null}
         </Box>
     )
 }
 
-export default CategoryBody;
+export default BrandBody;

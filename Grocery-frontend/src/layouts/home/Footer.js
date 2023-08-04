@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import grocery from "../assets/images/grocery.jpg";
+import grocery from "../../assets/images/grocery.jpg";
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormControl from '@mui/material/FormControl';

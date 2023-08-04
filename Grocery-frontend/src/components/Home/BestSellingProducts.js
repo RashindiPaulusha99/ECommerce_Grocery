@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Slide from "@mui/material/Slide";
 import HomeService from "../../Services/HomeService";
-import ModalCart from "../common/ModalCart";
+import ModalCart from "../common/model/ModalCart";
 import Button from "@mui/material/Button";
 
 const BestSellingProducts=(props)=>{

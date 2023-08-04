@@ -7,7 +7,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Dialog from "@mui/material/Dialog";
-import HomeService from "../../../Services/HomeService";
+import HomeService from "../../../../Services/HomeService";
 import Chip from "@mui/material/Chip";
 
 const ViewProductModal=(props)=>{

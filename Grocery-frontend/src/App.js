@@ -4,11 +4,11 @@ import NotFoundIndex from "./pages/NotFoundIndex";
 import Home from "./pages/Home";
 import Profile from "./components/Home/Profile";
 import Login from "./components/Login/Login";
-import Cart from "./components/cart/Cart";
-import Payment from "./components/common/Payment";
+import Cart from "./pages/Cart";
+import Payment from "./pages/Payment";
 import Register from "./components/Login/Register";
-import PaymentResponse from "./components/common/PaymentResponse";
-import Products from "./components/common/Products";
+import PaymentResponse from "./pages/PaymentResponse";
+import Products from "./pages/Products";
 import Dashboard from "./components/dashboard/Dashboard";
 
 function App() {

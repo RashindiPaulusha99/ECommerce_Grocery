@@ -2,9 +2,9 @@ import React, {useEffect,useState} from "react";
 import { useHistory } from "react-router-dom";
 import {useSelector} from "react-redux";
 
-import grocery from "../assets/images/grocery.jpg";
-import ProfileMenu from "../components/common/ProfileMenu";
-import HomeService from "../Services/HomeService";
+import grocery from "../../assets/images/grocery.jpg";
+import ProfileMenu from "../../components/common/dropdown/ProfileMenu";
+import HomeService from "../../Services/HomeService";
 
 const ProductsHeader=(props)=>{
 

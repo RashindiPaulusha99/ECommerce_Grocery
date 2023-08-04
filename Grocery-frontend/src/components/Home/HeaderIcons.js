@@ -12,7 +12,7 @@ import Divider from "@mui/material/Divider";
 import '../../assets/css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from '@mui/material/Button';
-import Cart from "../cart/Cart";
+import Cart from "../../pages/Cart";
 import {useHistory} from "react-router-dom";
 
 const HeaderIcons=()=>{

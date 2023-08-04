@@ -3,7 +3,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import AppWidgetSummary from "./AppWidgetSummary";
 import Box from "@mui/material/Box";
-import HomeService from "../../../Services/HomeService";
+import HomeService from "../../../../Services/HomeService";
 
 const DashboardBody=()=>{
 

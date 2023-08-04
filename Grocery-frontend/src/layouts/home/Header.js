@@ -4,10 +4,10 @@ import Button from '@mui/material/Button';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
-import grocery from "../assets/images/grocery.jpg";
-import CategoryMenu from "../components/common/CategoryMenu";
-import ProfileMenu from "../components/common/ProfileMenu";
-import HomeService from "../Services/HomeService";
+import grocery from "../../assets/images/grocery.jpg";
+import CategoryMenu from "../../components/common/dropdown/CategoryMenu";
+import ProfileMenu from "../../components/common/dropdown/ProfileMenu";
+import HomeService from "../../Services/HomeService";
 import {useSelector} from "react-redux";
 
 const Header=(props)=>{

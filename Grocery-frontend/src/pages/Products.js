@@ -1,13 +1,13 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {useHistory, withRouter} from "react-router-dom";
-import HeaderIcons from "../Home/HeaderIcons";
+import HeaderIcons from "../components/Home/HeaderIcons";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
-import ModalCart from "./ModalCart";
+import ModalCart from "../components/common/model/ModalCart";
 import Slide from "@mui/material/Slide";
-import HomeService from "../../Services/HomeService";
-import ProductsHeader from "../../layouts/ProductsHeader";
+import HomeService from "../Services/HomeService";
+import ProductsHeader from "../layouts/home/ProductsHeader";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;

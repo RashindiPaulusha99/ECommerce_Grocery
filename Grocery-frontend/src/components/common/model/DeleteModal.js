@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import HomeService from "../../Services/HomeService";
+import HomeService from "../../../Services/HomeService";
 
 const DeleteModal=(props)=>{
     const { onClose, open,id,handleCart } = props;

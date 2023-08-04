@@ -11,9 +11,9 @@ import Dialog from "@mui/material/Dialog";
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import image from '../../../assets/images/image.jpg'
-import HomeService from "../../../Services/HomeService";
-import SnackBar from "../../common/SnackBar";
+import image from '../../../../assets/images/image.jpg'
+import HomeService from "../../../../Services/HomeService";
+import SnackBar from "../../../common/alert/SnackBar";
 
 const AddProductModal=(props)=>{
 

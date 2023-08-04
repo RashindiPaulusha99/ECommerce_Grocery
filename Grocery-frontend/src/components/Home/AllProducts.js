@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import HomeService from "../../Services/HomeService";
 import Slide from '@mui/material/Slide';
-import ModalCart from "../common/ModalCart";
+import ModalCart from "../common/model/ModalCart";
 import {useSelector} from "react-redux";
 
 const Transition = React.forwardRef(function Transition(props, ref) {

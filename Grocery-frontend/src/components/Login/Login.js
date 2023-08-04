@@ -10,7 +10,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import image from  '../../assets/images/LoginImage.jpg';
 import {useHistory} from "react-router-dom";
 import HomeService from "../../Services/HomeService";
-import SnackBar from "../common/SnackBar";
+import SnackBar from "../common/alert/SnackBar";
 import { useSelector, useDispatch } from 'react-redux';
 import { login_Actions } from '../../store/action/login_action';
 
