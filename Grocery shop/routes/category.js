@@ -52,18 +52,28 @@ router.post("/save", upload.single("image"), async (req, res) => {
 
 router.put("/update/:id", upload.single("image"), async (req, res) => {
 
-    const post = await Category.findById(req.params.id)
-    post.category = req.body.category
-    post.image = {
-        data:fs.readFileSync(req.file.path),
-        contentType:'image/png'
-    }
-
     try {
-        const response = await post.save()
-        res.json(response)
-    }catch (error) {
-        res.send('Error : '+error)
+        const postId = req.params.id;
+        const post = await Category.findById(postId);
+
+        // Check if the request contains a category field and update it if it exists
+        if (req.body.category) {
+        post.category = req.body.category;
+        }
+
+        // Check if the request contains an image and update it if it exists
+        if (req.file) {
+            post.image = {
+                data: fs.readFileSync(req.file.path),
+                contentType: req.file.mimetype,
+            };
+        }
+
+        // Save the updated post
+        const response = await post.save();
+        res.json(response);
+    } catch (error) {
+        res.status(500).json({ error: 'Error updating the post.' });
     }
 })
 

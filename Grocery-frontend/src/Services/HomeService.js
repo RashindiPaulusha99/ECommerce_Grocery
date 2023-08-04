@@ -54,6 +54,33 @@ class HomeService {
         return await promise
     }
 
+    fetchABrand = async (id)=>{
+
+        const promise = new Promise((resolve, reject) =>{
+
+            axios.get('/brand/get/'+id,{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    updateBrand = async (id,data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.put(`/brand/update/${id}`,data)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
     saveCategory = async (data) =>{
         const promise = new Promise((resolve, reject) =>{
             axios.post('/category/save',data)
@@ -87,6 +114,33 @@ class HomeService {
 
             axios.get('/category/getAll/categories',{
             })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    fetchACategory = async (id)=>{
+
+        const promise = new Promise((resolve, reject) =>{
+
+            axios.get('/category/get/'+id,{
+            })
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
+    updateCategory = async (id,data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.put(`/category/update/${id}`,data)
                 .then((res) =>{
                     return resolve(res)
                 }).catch((error) =>{

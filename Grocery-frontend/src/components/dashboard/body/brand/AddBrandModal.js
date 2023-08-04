@@ -121,14 +121,14 @@ const AddBrandModal=(props)=>{
                             <Grid item xs={12} md={6} lg={6}>
                                 <div style={{width:'100%',height:'90%',position:'relative',borderRadius:10}}>
 
-                                        <Card sx={{ maxWidth: 345}}>
-                                            <CardMedia
-                                                component="img"
-                                                height="194"
-                                                image={imagePreview === '' ? image : imagePreview}
-                                                alt="brand"
-                                            />
-                                        </Card>
+                                    <Card sx={{ maxWidth: 345}}>
+                                        <CardMedia
+                                            component="img"
+                                            height="194"
+                                            image={imagePreview === '' ? image : imagePreview}
+                                            alt="brand"
+                                        />
+                                    </Card>
 
                                     <input
                                         type="file"

@@ -13,6 +13,7 @@ import AddIcon from '@mui/icons-material/Add';
 import DeletePopUp from "../../../common/model/DeletePopUp";
 import Slide from "@mui/material/Slide";
 import AddCategoryModal from "./AddCategoryModal";
+import EditCategoryModal from "./EditCategoryModal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -27,6 +28,7 @@ const CategoryBody=()=>{
     const [message, setMessage] = useState('All fields are required!');
     const [open, setOpen] = useState(false);
     const [openAdd, setOpenAdd] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
 
     const handleOpenModal = () => setOpen(true);
     const handleCloseModal = () => setOpen(false);
@@ -60,6 +62,14 @@ const CategoryBody=()=>{
         setOpenAdd(true);
     };
 
+    const handleCloseOpenEdit = () => {
+        setOpenEdit(false);
+    };
+
+    const handleClickOpenEdit =async () => {
+        setOpenEdit(true);
+    };
+
     const arrayBufferToBase64 = (buffer) => {
         var binary = '';
         var bytes = [].slice.call(new Uint8Array(buffer));
@@ -68,7 +78,7 @@ const CategoryBody=()=>{
     };
 
     const handleEditCategory=async (id)=>{
-        /*setOpen(true)*/
+        setOpenEdit(true)
         setId(id);
     }
 
@@ -134,6 +144,7 @@ const CategoryBody=()=>{
             <SnackBar state={state} handleClose={handleClose} message={message} severity={severity}/>
             <DeletePopUp open={open} handleCloseModal={handleCloseModal} deleteUser={deleteUser}/>
             {openAdd ? <AddCategoryModal openAdd={openAdd} handleClickOpen={handleClickOpen} handleCloseOpen={handleCloseOpen} Transition={Transition} fetchDetails={fetchDetails}/> : null}
+            {openEdit ? <EditCategoryModal openEdit={openEdit} handleClickOpenEdit={handleClickOpenEdit} handleCloseOpenEdit={handleCloseOpenEdit} Transition={Transition} fetchDetails={fetchDetails} id={id}/> : null}
         </Box>
     )
 }

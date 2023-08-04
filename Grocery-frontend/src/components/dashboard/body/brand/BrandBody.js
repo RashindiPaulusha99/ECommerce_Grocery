@@ -14,6 +14,7 @@ import DeletePopUp from "../../../common/model/DeletePopUp";
 import SnackBar from "../../../common/alert/SnackBar";
 import AddBrandModal from "./AddBrandModal";
 import Slide from "@mui/material/Slide";
+import EditBrandModal from "./EditBrandMondal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -28,6 +29,7 @@ const BrandBody=()=>{
     const [message, setMessage] = useState('All fields are required!');
     const [open, setOpen] = useState(false);
     const [openAdd, setOpenAdd] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
 
     const handleOpenModal = () => setOpen(true);
     const handleCloseModal = () => setOpen(false);
@@ -46,6 +48,14 @@ const BrandBody=()=>{
 
     const handleClickOpen =async () => {
         setOpenAdd(true);
+    };
+
+    const handleCloseOpenEdit = () => {
+        setOpenEdit(false);
+    };
+
+    const handleClickOpenEdit =async () => {
+        setOpenEdit(true);
     };
 
     useEffect(()=>{
@@ -69,7 +79,8 @@ const BrandBody=()=>{
     };
 
     const handleEditBrand=async (id)=>{
-        //const response = await HomeService.
+        setOpenEdit(true)
+        setId(id);
     }
 
     const handleDeleteBrand=async (id)=>{
@@ -137,6 +148,7 @@ const BrandBody=()=>{
             <SnackBar state={state} handleClose={handleClose} message={message} severity={severity}/>
             <DeletePopUp open={open} handleCloseModal={handleCloseModal} deleteUser={deleteUser}/>
             {openAdd ? <AddBrandModal openAdd={openAdd} handleClickOpen={handleClickOpen} handleCloseOpen={handleCloseOpen} Transition={Transition} fetchDetails={fetchDetails}/> : null}
+            {openEdit ? <EditBrandModal openEdit={openEdit} handleClickOpenEdit={handleClickOpenEdit} handleCloseOpenEdit={handleCloseOpenEdit} Transition={Transition} fetchDetails={fetchDetails} id={id}/> : null}
         </Box>
     )
 }

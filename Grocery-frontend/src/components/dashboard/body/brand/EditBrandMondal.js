@@ -15,10 +15,12 @@ import image from '../../../../assets/images/image.jpg'
 import HomeService from "../../../../Services/HomeService";
 import SnackBar from "../../../common/alert/SnackBar";
 
-const EditCategoryModal=(props)=>{
+const EditBrandModal=(props)=>{
 
     const fileInputRef = useRef(null);
     const [category, setCategory] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [brand, setBrand] = useState('');
     const [id, setId] = useState('');
     const [icon, setIcon] = useState('');
     const [imagePreview, setImagePreview] = useState('');
@@ -29,12 +31,22 @@ const EditCategoryModal=(props)=>{
     useEffect(()=>{
         setId(props.id)
         loadData(props.id)
+        getAllCategories()
     },[])
 
+    const getAllCategories = async ()=>{
+        const response  = await HomeService.fetchAllCategories();
+        if (response.status === 200){
+            setCategories(response.data)
+        }
+
+    }
+
     const loadData=async (id)=>{
-        const response = await HomeService.fetchACategory(id);
+        const response = await HomeService.fetchABrand(id);
         if (response.status === 200){
             setCategory(response.data.category)
+            setBrand(response.data.brand)
             setImagePreview('data:image/jpeg;base64,'+arrayBufferToBase64(response.data.image.data.data));
         }
     }
@@ -69,9 +81,9 @@ const EditCategoryModal=(props)=>{
         fileInputRef.current.click();
     };
 
-    const handleEditCategory=async ()=>{
+    const handleEditBrand=async ()=>{
 
-        if (category === ''){
+        if (category === '' || brand === ''){
             setSeverity("error")
             setMessage("All fields are required!")
             handleClick()
@@ -79,8 +91,9 @@ const EditCategoryModal=(props)=>{
             if (icon === '') {
                 const formData = new FormData();
                 formData.append('category', category);
+                formData.append('brand', brand);
 
-                const response = await HomeService.updateCategory(id, formData);
+                const response = await HomeService.updateBrand(id, formData);
                 if (response.status === 200) {
                     setSeverity("success")
                     setMessage("Successfully Updated!")
@@ -91,9 +104,10 @@ const EditCategoryModal=(props)=>{
             } else {
                 const formData = new FormData();
                 formData.append('category', category);
+                formData.append('brand', brand);
                 formData.append('image', icon);
 
-                const response = await HomeService.updateCategory(id, formData);
+                const response = await HomeService.updateBrand(id, formData);
                 console.log(response.data)
                 if (response.status === 200) {
                     setSeverity("success")
@@ -141,42 +155,44 @@ const EditCategoryModal=(props)=>{
                         <Grid container spacing={2}>
                             <Grid item xs={12} md={6} lg={6}>
                                 <div style={{width:'100%',height:'90%',position:'relative',borderRadius:10}}>
-                                    <div style={{
-                                        boxShadow: 'rgba(0, 0, 0, 0.1) 0px 1px 2px 0px',
-                                        maxWidth: 345,
-                                        height: '200px',
-                                        backgroundSize: 'cover',
-                                        backgroundPosition: 'center',
-                                        backgroundRepeat: 'no-repeat',
-                                    }}>
-                                        <Card sx={{ maxWidth: 120,boxShadow:'none',position:"absolute",top:39,bottom:0,left:0,right:0,margin:"auto" }}>
-                                            <CardMedia
-                                                component="img"
-                                                height="120px"
-                                                image={imagePreview === '' ? image : imagePreview}
-                                                alt="category"
-                                            />
-                                        </Card>
-                                    </div>
+
+                                    <Card sx={{ maxWidth: 345}}>
+                                        <CardMedia
+                                            component="img"
+                                            height="194"
+                                            image={imagePreview === '' ? image : imagePreview}
+                                            alt="brand"
+                                        />
+                                    </Card>
                                     <input
                                         type="file"
                                         ref={fileInputRef}
                                         style={{ display: 'none' }}
                                         onChange={handleFileInputChange}
                                     />
-                                    <IconButton aria-label="add to image" onClick={handleIconButtonClick} style={{position:'absolute',bottom:-36,left:-18,backgroundColor:'white'}}>
+                                    <IconButton aria-label="add to image" onClick={handleIconButtonClick} style={{position:'absolute',bottom:3,left:-12,backgroundColor:'white'}}>
                                         <CameraAltOutlinedIcon />
                                     </IconButton>
                                 </div>
                             </Grid>
                             <Grid item xs={12} md={6} lg={6}>
                                 <div className="mb-5">
-                                    <label htmlFor="fruits" className="form-label">Category</label>
-                                    <input type="text" className="form-control" id="fruits" value={category} placeholder="Fruits" onChange={(e)=>{
+                                    <label htmlFor="category" className="form-label">Category</label>
+                                    <select className="form-select" value={category} aria-label="Default select example" onChange={(e)=>{
                                         setCategory(e.target.value)
+                                    }}>
+                                        {categories.map((category, index) => (
+                                            <option key={index} value={category}>
+                                                {category}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    <label htmlFor="brand" className="form-label mt-3">Brand</label>
+                                    <input type="text" className="form-control" value={brand} id="brand" placeholder="Fruits" onChange={(e)=>{
+                                        setBrand(e.target.value)
                                     }}/>
                                 </div>
-                                <Button style={{backgroundColor:'black'}} fullWidth variant="contained" onClick={handleEditCategory}>Edit</Button>
+                                <Button style={{backgroundColor:'black'}} fullWidth variant="contained" onClick={handleEditBrand}>Edit</Button>
                             </Grid>
                         </Grid>
                     </Box>
@@ -187,4 +203,4 @@ const EditCategoryModal=(props)=>{
     )
 }
 
-export default EditCategoryModal;
+export default EditBrandModal;
