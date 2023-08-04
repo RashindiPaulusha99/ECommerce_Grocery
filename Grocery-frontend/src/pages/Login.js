@@ -134,11 +134,6 @@ const Login=()=>{
                                 size='small'
                                 type='email'
                                 fullWidth
-                                InputProps={{
-                                    style: {
-                                        color: showErrorEmail ? 'black' : 'inherit',
-                                    },
-                                }}
                                 style={{ marginTop: 20 }}
                                 onChange={(e)=>{
                                     setEmail(e.target.value)
@@ -156,11 +151,6 @@ const Login=()=>{
                                 size='small'
                                 type='password'
                                 fullWidth
-                                InputProps={{
-                                    style: {
-                                        color: showErrorPassword ? 'black' : 'inherit',
-                                    },
-                                }}
                                 style={{ marginTop: 20 }}
                                 onChange={(e)=>{
                                     setPassword(e.target.value)

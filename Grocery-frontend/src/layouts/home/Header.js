@@ -56,6 +56,30 @@ const Header=(props)=>{
         });
     }
 
+    const  handleOpenAbout=()=>{
+        history.push({
+            pathname:'/about'
+        });
+    }
+
+    const  handleOpenBlogs=()=>{
+        history.push({
+            pathname:'/blog'
+        });
+    }
+
+    const  handleOpenServices=()=>{
+        history.push({
+            pathname:'/service'
+        });
+    }
+
+    const  handleOpenContact=()=>{
+        history.push({
+            pathname:'/contact'
+        });
+    }
+
     const handleCartSize=async ()=>{
         const response = await HomeService.getCart(userId);
         if (response.status === 200){
@@ -159,16 +183,16 @@ const Header=(props)=>{
                                             <li className="nav-item active nav" onClick={handleOpenHome}>
                                                 <a className="nav-link" >Home</a>
                                             </li>
-                                            <li className="nav-item dropdown nav">
+                                            <li className="nav-item dropdown nav" onClick={handleOpenAbout}>
                                                 <a  className="nav-link">About Us</a>
                                             </li>
-                                            <li className="nav-item">
+                                            <li className="nav-item" onClick={handleOpenBlogs}>
                                                 <a  className="nav-link nav">Blogs</a>
                                             </li>
-                                            <li className="nav-item">
+                                            <li className="nav-item" onClick={handleOpenServices}>
                                                 <a  className="nav-link nav">Services</a>
                                             </li>
-                                            <li className="nav-item">
+                                            <li className="nav-item" onClick={handleOpenContact}>
                                                 <a  className="nav-link nav">Contact Us</a>
                                             </li>
                                             

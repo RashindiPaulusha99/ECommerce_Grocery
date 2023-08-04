@@ -10,6 +10,11 @@ import Register from "./pages/Register";
 import PaymentResponse from "./pages/PaymentResponse";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
+import AboutPage from "./pages/AboutPage";
+import Blog from "./components/Home/Blog";
+import BlogPage from "./pages/BlogPage";
+import ServicePage from "./pages/ServicePage";
+import ContactPage from "./pages/ContactPage";
 
 function App() {
   return (
@@ -25,6 +30,18 @@ function App() {
           </Route>
           <Route path='/profile'>
               <Profile/>
+          </Route>
+          <Route path='/about'>
+              <AboutPage/>
+          </Route>
+          <Route path='/blog'>
+              <BlogPage/>
+          </Route>
+          <Route path='/service'>
+              <ServicePage/>
+          </Route>
+          <Route path='/contact'>
+              <ContactPage/>
           </Route>
           <Route path='/cart'>
               <Cart/>

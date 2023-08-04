@@ -143,11 +143,6 @@ const Register=()=>{
                                 size='small'
                                 type='text'
                                 fullWidth
-                                InputProps={{
-                                    style: {
-                                        color: showErrorName ? 'black' : 'inherit',
-                                    },
-                                }}
                                 style={{ marginTop: 20 }}
                                 onChange={(e)=>{
                                     setName(e.target.value)
@@ -165,11 +160,6 @@ const Register=()=>{
                                 size='small'
                                 type='email'
                                 fullWidth
-                                InputProps={{
-                                    style: {
-                                        color: showErrorEmail ? 'black' : 'inherit',
-                                    },
-                                }}
                                 style={{ marginTop: 20 }}
                                 onChange={(e)=>{
                                     setEmail(e.target.value)
@@ -187,11 +177,6 @@ const Register=()=>{
                                 size='small'
                                 type='password'
                                 fullWidth
-                                InputProps={{
-                                    style: {
-                                        color: showErrorPassword ? 'black' : 'inherit',
-                                    },
-                                }}
                                 style={{ marginTop: 20 }}
                                 onChange={(e)=>{
                                     setPassword(e.target.value)
