@@ -108,7 +108,6 @@ const EditBrandModal=(props)=>{
                 formData.append('image', icon);
 
                 const response = await HomeService.updateBrand(id, formData);
-                console.log(response.data)
                 if (response.status === 200) {
                     setSeverity("success")
                     setMessage("Successfully Updated!")
@@ -147,7 +146,7 @@ const EditBrandModal=(props)=>{
                         <CloseIcon />
                     </IconButton>
                 ) : null}
-                Add new category
+                Edit brand
             </DialogTitle>
             <DialogContent >
                 <DialogContentText id="alert-dialog-slide-description">

@@ -16,6 +16,7 @@ import DeletePopUp from "../../../common/model/DeletePopUp";
 import AddProductModal from "./AddProductModal";
 import Slide from "@mui/material/Slide";
 import ViewProductModal from "./ViewProductModal";
+import EditProductModal from "./EditProductModal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -30,8 +31,9 @@ const ProductBody=()=>{
     const [message, setMessage] = useState('All fields are required!');
     const [openAdd, setOpenAdd] = useState(false);
     const [openView, setOpenView] = useState(false);
+    const [openEdit, setOpenEdit] = useState(false);
+    const [open, setOpen] = useState(false);
 
-    const [open, setOpen] = React.useState(false);
     const handleOpenModal = () => setOpen(true);
     const handleCloseModal = () => setOpen(false);
 
@@ -59,6 +61,14 @@ const ProductBody=()=>{
         setOpenView(true);
     };
 
+    const handleCloseOpenEdit = () => {
+        setOpenEdit(false);
+    };
+
+    const handleClickOpenEdit =async () => {
+        setOpenEdit(true);
+    };
+
     const columns = [
         { field: 'id', headerName: 'ID', width: 70 },
         { field: 'name', headerName: 'Name', width: 280 },
@@ -82,14 +92,13 @@ const ProductBody=()=>{
     ];
 
     const handleEdit = async (tId) => {
-
-        console.log(tId);
+        setOpenEdit(true)
+        setTid(tId)
     };
 
     const handleView = async (tId) => {
         setTid(tId)
         setOpenView(true)
-        console.log(tId);
     };
 
     const handleDelete =(tId) => {
@@ -167,6 +176,7 @@ const ProductBody=()=>{
             <SnackBar state={state} handleClose={handleClose} message={message} severity={severity}/>
             <DeletePopUp open={open} handleCloseModal={handleCloseModal} deleteUser={deleteUser}/>
             {openAdd ? <AddProductModal openAdd={openAdd} handleClickOpen={handleClickOpen} handleCloseOpen={handleCloseOpen} Transition={Transition} fetchDetails={fetchDetails}/> : null}
+            {openEdit ? <EditProductModal openEdit={openEdit} handleClickOpenEdit={handleClickOpenEdit} handleCloseOpenEdit={handleCloseOpenEdit} Transition={Transition} fetchDetails={fetchDetails} id={tId}/> : null}
             {openView ? <ViewProductModal openView={openView} handleClickView={handleClickView} handleCloseView={handleCloseView} Transition={Transition} id={tId}/> : null}
         </Box>
     )

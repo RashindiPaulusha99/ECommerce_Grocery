@@ -61,26 +61,57 @@ router.post("/save", upload.single("image"), async (req, res) => {
 
 router.put("/update/:id", upload.single("image"), async (req, res) => {
 
-    const post = await Item.findById(req.params.id)
-        post.name=req.body.name
-        post.description=req.body.description
-        post.category=req.body.category
-        post.brand=req.body.brand
-        post.qty_on_hand=req.body.qty_on_hand
-        post.discount=req.body.discount
-        post.volume=req.body.volume
-        post.unit_of_volume=req.body.unit_of_volume
-        post.unit_price=req.body.unit_price
-        post.image = {
-            data:fs.readFileSync(req.file.path),
-            contentType:'image/png'
-    }
-
     try {
-        const response = await post.save()
-        res.json(response)
-    }catch (error) {
-        res.send('Error : '+error)
+        const postId = req.params.id;
+        const post = await Item.findById(postId);
+
+        if (req.body.name) {
+            post.name = req.body.name;
+        }
+
+        if (req.body.description) {
+            post.description = req.body.description;
+        }
+
+        if (req.body.category) {
+            post.category = req.body.category;
+        }
+
+        if (req.body.brand) {
+            post.brand = req.body.brand;
+        }
+
+        if (req.body.qty_on_hand) {
+            post.qty_on_hand = req.body.qty_on_hand;
+        }
+
+        if (req.body.discount) {
+            post.discount = req.body.discount;
+        }
+
+        if (req.body.volume) {
+            post.volume = req.body.volume;
+        }
+
+        if (req.body.unit_of_volume) {
+            post.unit_of_volume = req.body.unit_of_volume;
+        }
+
+        if (req.body.unit_price) {
+            post.unit_price = req.body.unit_price;
+        }
+
+        if (req.file) {
+            post.image = {
+                data: fs.readFileSync(req.file.path),
+                contentType: req.file.mimetype,
+            };
+        }
+
+        const response = await post.save();
+        res.json(response);
+    } catch (error) {
+        res.status(500).json({ error: 'Error updating the post.' });
     }
 })
 

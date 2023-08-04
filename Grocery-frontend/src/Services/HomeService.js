@@ -241,6 +241,18 @@ class HomeService {
         return await promise
     }
 
+    updateItem = async (id,data) =>{
+        const promise = new Promise((resolve, reject) =>{
+            axios.put(`/item/update/${id}`,data)
+                .then((res) =>{
+                    return resolve(res)
+                }).catch((error) =>{
+                return resolve(error)
+            })
+        })
+        return await promise
+    }
+
     saveCart = async (data) =>{
         const promise = new Promise((resolve, reject) =>{
             axios.post('/cart/save',data)

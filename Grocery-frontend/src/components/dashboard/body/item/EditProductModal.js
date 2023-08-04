@@ -15,11 +15,12 @@ import image from '../../../../assets/images/image.jpg'
 import HomeService from "../../../../Services/HomeService";
 import SnackBar from "../../../common/alert/SnackBar";
 
-const AddProductModal=(props)=>{
+const EditProductModal=(props)=>{
 
     const fileInputRef = useRef(null);
-    const [brand, setBrand] = useState('');
     const [category, setCategory] = useState('');
+    const [brand, setBrand] = useState('');
+    const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [qty, setQty] = useState('');
@@ -29,28 +30,53 @@ const AddProductModal=(props)=>{
     const [price, setPrice] = useState('');
     const [icon, setIcon] = useState('');
     const [imagePreview, setImagePreview] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [brands, setBrands] = useState([]);
     const [state, setState] = useState(false);
     const [severity, setSeverity] = useState('warning');
     const [message, setMessage] = useState('All fields are required!');
-    const [brands, setBrands] = useState([]);
-    const [categories, setCategories] = useState([]);
 
     useEffect(()=>{
+        setId(props.id)
+        loadData(props.id)
         getAllCategoriesAndBrands()
     },[])
 
     const getAllCategoriesAndBrands = async ()=>{
-        const response  = await HomeService.fetchAllBrands();
-        if (response.status === 200){
-            setBrands(response.data)
+        const categories  = await HomeService.fetchAllCategories();
+        if (categories.status === 200){
+            setCategories(categories.data)
         }
 
-        const responses  = await HomeService.fetchAllCategories();
-        if (responses.status === 200){
-            setCategories(responses.data)
+        const brands  = await HomeService.fetchAllBrands();
+        if (brands.status === 200){
+            setBrands(brands.data)
         }
 
     }
+
+    const loadData=async (id)=>{
+        const response = await HomeService.fetchItem(id);
+        if (response.status === 200){
+            setCategory(response.data.category)
+            setBrand(response.data.brand)
+            setName(response.data.name)
+            setDescription(response.data.description)
+            setQty(response.data.qty_on_hand)
+            setDiscount(response.data.discount)
+            setVolume(response.data.volume)
+            setUnitOfVolume(response.data.unit_of_volume)
+            setPrice(response.data.unit_price)
+            setImagePreview('data:image/jpeg;base64,'+arrayBufferToBase64(response.data.image.data.data));
+        }
+    }
+
+    const arrayBufferToBase64 = (buffer) => {
+        var binary = '';
+        var bytes = [].slice.call(new Uint8Array(buffer));
+        bytes.forEach((b) => binary += String.fromCharCode(b));
+        return window.btoa(binary);
+    };
 
     const handleClick = () => {
         setState(true);
@@ -75,32 +101,54 @@ const AddProductModal=(props)=>{
         fileInputRef.current.click();
     };
 
-    const handleAddProduct=async ()=>{
+    const handleEditProduct=async ()=>{
 
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('description', description);
-        formData.append('category', category);
-        formData.append('brand', brand);
-        formData.append('qty_on_hand', qty);
-        formData.append('discount', discount);
-        formData.append('volume', volume);
-        formData.append('unit_of_volume', unitOfVolume);
-        formData.append('unit_price', price);
-        formData.append('image', icon);
-
-        if (icon === '' || category === '' || brand === '' || name === '' || description === '' || qty === '' || discount === '' || volume === '' || unitOfVolume === '' || price === ''){
+        if (category === '' || brand === '' || name === '' || description === '' || qty === '' || discount === '' || volume === '' || unitOfVolume === '' || price === ''){
             setSeverity("error")
             setMessage("All fields are required!")
             handleClick()
         }else {
-            const response = await HomeService.saveItem(formData);
-            if (response.status === 200){
-                setSeverity("success")
-                setMessage("Successfully Added!")
-                handleClick()
-                props.fetchDetails()
-                props.handleCloseOpen()
+            if (icon === '') {
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('description', description);
+                formData.append('category', category);
+                formData.append('brand', brand);
+                formData.append('qty_on_hand', qty);
+                formData.append('discount', discount);
+                formData.append('volume', volume);
+                formData.append('unit_of_volume', unitOfVolume);
+                formData.append('unit_price', price);
+
+                const response = await HomeService.updateItem(id, formData);
+                if (response.status === 200) {
+                    setSeverity("success")
+                    setMessage("Successfully Updated!")
+                    handleClick()
+                    props.fetchDetails()
+                    props.handleCloseOpenEdit()
+                }
+            } else {
+                const formData = new FormData();
+                formData.append('name', name);
+                formData.append('description', description);
+                formData.append('category', category);
+                formData.append('brand', brand);
+                formData.append('qty_on_hand', qty);
+                formData.append('discount', discount);
+                formData.append('volume', volume);
+                formData.append('unit_of_volume', unitOfVolume);
+                formData.append('unit_price', price);
+                formData.append('image', icon);
+
+                const response = await HomeService.updateItem(id, formData);
+                if (response.status === 200) {
+                    setSeverity("success")
+                    setMessage("Successfully Updated!")
+                    handleClick()
+                    props.fetchDetails()
+                    props.handleCloseOpenEdit()
+                }
             }
         }
     }
@@ -109,18 +157,18 @@ const AddProductModal=(props)=>{
         <Dialog
             fullWidth
             maxWidth={'md'}
-            open={props.openAdd}
+            open={props.openEdit}
             TransitionComponent={props.Transition}
             keepMounted
-            onClose={props.handleCloseOpen}
+            onClose={props.handleCloseOpenEdit}
             aria-describedby="alert-dialog-slide-description"
         >
             <DialogTitle sx={{ m: 0, p: 2,paddingBottom:3}}>
 
-                {props.handleCloseOpen ? (
+                {props.handleCloseOpenEdit ? (
                     <IconButton
                         aria-label="close"
-                        onClick={props.handleCloseOpen}
+                        onClick={props.handleCloseOpenEdit}
                         sx={{
                             position: 'absolute',
                             right: 8,
@@ -132,7 +180,7 @@ const AddProductModal=(props)=>{
                         <CloseIcon />
                     </IconButton>
                 ) : null}
-                Add new item
+                Edit item
             </DialogTitle>
             <DialogContent >
                 <DialogContentText id="alert-dialog-slide-description">
@@ -165,7 +213,7 @@ const AddProductModal=(props)=>{
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} md={6} lg={6}>
                                         <label htmlFor="category" className="form-label">Category</label>
-                                        <select className="form-select" aria-label="Default select example" onChange={(e)=>{
+                                        <select className="form-select" value={category} aria-label="Default select example" onChange={(e)=>{
                                             setCategory(e.target.value)
                                         }}>
                                             {categories.map((category, index) => (
@@ -177,7 +225,7 @@ const AddProductModal=(props)=>{
                                     </Grid>
                                     <Grid item xs={12} md={6} lg={6}>
                                         <label htmlFor="brand" className="form-label">Brand</label>
-                                        <select className="form-select" aria-label="Default select example" onChange={(e)=>{
+                                        <select className="form-select" value={brand} aria-label="Default select example" onChange={(e)=>{
                                             setBrand(e.target.value)
                                         }}>
                                             {brands.map((brand, index) => (
@@ -189,19 +237,19 @@ const AddProductModal=(props)=>{
                                     </Grid>
                                     <Grid item xs={12} md={6} lg={6}>
                                         <label htmlFor="name" className="form-label mt-3">Name</label>
-                                        <input type="text" className="form-control" id="name" onChange={(e)=>{
+                                        <input type="text" className="form-control" value={name} id="name" onChange={(e)=>{
                                             setName(e.target.value)
                                         }}/>
                                     </Grid>
                                     <Grid item xs={12} md={6} lg={6}>
                                         <label htmlFor="qty" className="form-label mt-3">Qty On Hand</label>
-                                        <input type="text" className="form-control" id="qty" onChange={(e)=>{
+                                        <input type="text" className="form-control" value={qty} id="qty" onChange={(e)=>{
                                             setQty(e.target.value)
                                         }}/>
                                     </Grid>
                                     <Grid item xs={12} md={12} lg={12}>
                                         <label htmlFor="desc" className="form-label mt-3">Description</label>
-                                        <textarea className="form-control" id="desc" rows="3" onChange={(e)=>{
+                                        <textarea className="form-control" id="desc" value={description} rows="3" onChange={(e)=>{
                                             setDescription(e.target.value)
                                         }}></textarea>
                                     </Grid>
@@ -211,30 +259,30 @@ const AddProductModal=(props)=>{
                                 <Grid container spacing={1}>
                                     <Grid item xs={12} md={3} lg={3}>
                                         <label htmlFor="discount" className="form-label mt-3">Discount(%)</label>
-                                        <input type="text" className="form-control" id="discount" onChange={(e)=>{
+                                        <input type="text" className="form-control" value={discount} id="discount" onChange={(e)=>{
                                             setDiscount(e.target.value)
                                         }}/>
                                     </Grid>
                                     <Grid item xs={12} md={3} lg={3}>
                                         <label htmlFor="price" className="form-label mt-3">Unit Price(Rs.)</label>
-                                        <input type="text" className="form-control" id="price"  onChange={(e)=>{
+                                        <input type="text" className="form-control" value={price} id="price"  onChange={(e)=>{
                                             setPrice(e.target.value)
                                         }}/>
                                     </Grid>
                                     <Grid item xs={12} md={3} lg={3}>
                                         <label htmlFor="volume" className="form-label mt-3">Volume</label>
-                                        <input type="text" className="form-control" id="volume" onChange={(e)=>{
+                                        <input type="text" className="form-control" value={volume} id="volume" onChange={(e)=>{
                                             setVolume(e.target.value)
                                         }}/>
                                     </Grid>
                                     <Grid item xs={12} md={3} lg={3}>
                                         <label htmlFor="unitVolume" className="form-label mt-3">Unit Of Volume</label>
-                                        <input type="text" className="form-control" id="unitVolume" onChange={(e)=>{
+                                        <input type="text" className="form-control"  value={unitOfVolume} id="unitVolume" onChange={(e)=>{
                                             setUnitOfVolume(e.target.value)
                                         }}/>
                                     </Grid>
                                 </Grid>
-                                <Button style={{backgroundColor:'black'}} className='mt-4 mb-3' fullWidth variant="contained" onClick={handleAddProduct}>Add</Button>
+                                <Button style={{backgroundColor:'black'}} className='mt-4 mb-3' fullWidth variant="contained" onClick={handleEditProduct}>Edit</Button>
                             </Grid>
                         </Grid>
                     </Box>
@@ -245,4 +293,4 @@ const AddProductModal=(props)=>{
     )
 }
 
-export default AddProductModal;
+export default EditProductModal;

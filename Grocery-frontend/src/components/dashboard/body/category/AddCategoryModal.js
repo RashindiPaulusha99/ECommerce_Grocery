@@ -136,7 +136,7 @@ const AddCategoryModal=(props)=>{
                             <Grid item xs={12} md={6} lg={6}>
                                 <div className="mb-5">
                                     <label htmlFor="fruits" className="form-label">Category</label>
-                                    <input type="text" className="form-control" id="fruits" placeholder="Fruits" onChange={(e)=>{
+                                    <input type="text" className="form-control" id="fruits" onChange={(e)=>{
                                         setCategory(e.target.value)
                                     }}/>
                                 </div>

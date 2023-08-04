@@ -57,7 +57,6 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
         const postId = req.params.id;
         const post = await Brand.findById(postId);
 
-        // Check if the request contains a category field and update it if it exists
         if (req.body.category) {
             post.category = req.body.category;
         }
@@ -66,7 +65,6 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
             post.brand = req.body.brand;
         }
 
-        // Check if the request contains an image and update it if it exists
         if (req.file) {
             post.image = {
                 data: fs.readFileSync(req.file.path),
@@ -74,7 +72,6 @@ router.put("/update/:id", upload.single("image"), async (req, res) => {
             };
         }
 
-        // Save the updated post
         const response = await post.save();
         res.json(response);
     } catch (error) {

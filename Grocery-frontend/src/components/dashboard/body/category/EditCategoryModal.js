@@ -133,7 +133,7 @@ const EditCategoryModal=(props)=>{
                         <CloseIcon />
                     </IconButton>
                 ) : null}
-                Add new category
+                Edit category
             </DialogTitle>
             <DialogContent >
                 <DialogContentText id="alert-dialog-slide-description">

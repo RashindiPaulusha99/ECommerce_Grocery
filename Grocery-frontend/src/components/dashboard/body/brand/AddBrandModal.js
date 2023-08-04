@@ -154,7 +154,7 @@ const AddBrandModal=(props)=>{
                                         ))}
                                     </select>
                                     <label htmlFor="brand" className="form-label mt-3">Brand</label>
-                                    <input type="text" className="form-control" id="brand" placeholder="Fruits" onChange={(e)=>{
+                                    <input type="text" className="form-control" id="brand" onChange={(e)=>{
                                         setBrand(e.target.value)
                                     }}/>
                                 </div>
