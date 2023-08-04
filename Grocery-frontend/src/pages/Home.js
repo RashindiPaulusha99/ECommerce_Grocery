@@ -4,15 +4,14 @@ import '../assets/css/vendor.css';
 import '../assets/css/style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { withRouter } from 'react-router-dom';
-
 import Category from "../components/Home/Category";
 import NewlyArrivedBrands from "../components/Home/NewlyArrivedBrands";
 import HeaderBanner from "../components/Home/HeaderBanner";
 import MiddleBanners from "../components/Home/MiddleBanners";
 import Form from "../components/Home/Form";
-import HeaderIcons from "../components/Home/HeaderIcons";
+import HeaderIcons from "../layouts/home/HeaderIcons";
 import Header from "../layouts/home/Header";
-import Search from "../components/Home/Search";
+import Search from "../layouts/home/Search";
 import BestSellingProducts from "../components/Home/BestSellingProducts";
 import Blog from "../components/Home/Blog";
 import AllProducts from "../components/Home/AllProducts";

@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from "react";
 import Header from "../layouts/home/Header";
-import HeaderIcons from "../components/Home/HeaderIcons";
+import HeaderIcons from "../layouts/home/HeaderIcons";
 import Typography from "@mui/material/Typography";
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import IconButton from '@mui/material/IconButton';

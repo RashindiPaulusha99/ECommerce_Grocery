@@ -1,6 +1,6 @@
 import React,{Fragment,useState,useEffect} from "react";
 import Header from "../layouts/home/Header";
-import HeaderIcons from "../components/Home/HeaderIcons";
+import HeaderIcons from "../layouts/home/HeaderIcons";
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';

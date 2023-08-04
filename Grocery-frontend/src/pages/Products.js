@@ -1,6 +1,6 @@
 import React, {Fragment, useEffect, useState} from "react";
 import {useHistory, withRouter} from "react-router-dom";
-import HeaderIcons from "../components/Home/HeaderIcons";
+import HeaderIcons from "../layouts/home/HeaderIcons";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";

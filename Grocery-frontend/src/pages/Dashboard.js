@@ -5,14 +5,14 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
-import logo from '../../assets/images/grocery.jpg'
-import DashboardHeader from "../../layouts/dashboard/DashboardHeader";
-import DrawerList from "./DrawerList";
-import DashboardBody from "./body/dashboard/DashboardBody";
-import UserBody from "./body/user/UserBody";
-import CategoryBody from "./body/category/CategoryBody";
-import BrandBody from "./body/brand/BrandBody";
-import ProductBody from "./body/item/ProductBody";
+import logo from '../assets/images/grocery.jpg'
+import DashboardHeader from "../layouts/dashboard/DashboardHeader";
+import DrawerList from "../components/dashboard/body/dashboard/DrawerList";
+import DashboardBody from "../components/dashboard/body/dashboard/DashboardBody";
+import UserBody from "../components/dashboard/body/user/UserBody";
+import CategoryBody from "../components/dashboard/body/category/CategoryBody";
+import BrandBody from "../components/dashboard/body/brand/BrandBody";
+import ProductBody from "../components/dashboard/body/item/ProductBody";
 
 const drawerWidth = 240;
 

@@ -3,13 +3,13 @@ import {Route,Switch} from "react-router-dom";
 import NotFoundIndex from "./pages/NotFoundIndex";
 import Home from "./pages/Home";
 import Profile from "./components/Home/Profile";
-import Login from "./components/Login/Login";
+import Login from "./pages/Login";
 import Cart from "./pages/Cart";
 import Payment from "./pages/Payment";
-import Register from "./components/Login/Register";
+import Register from "./pages/Register";
 import PaymentResponse from "./pages/PaymentResponse";
 import Products from "./pages/Products";
-import Dashboard from "./components/dashboard/Dashboard";
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (

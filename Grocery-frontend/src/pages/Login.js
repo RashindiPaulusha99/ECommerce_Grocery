@@ -7,12 +7,12 @@ import TextField from '@mui/material/TextField';
 import { alpha, styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import FormHelperText from '@mui/material/FormHelperText';
-import image from  '../../assets/images/LoginImage.jpg';
+import image from '../assets/images/LoginImage.jpg';
 import {useHistory} from "react-router-dom";
-import HomeService from "../../Services/HomeService";
-import SnackBar from "../common/alert/SnackBar";
+import HomeService from "../Services/HomeService";
+import SnackBar from "../components/common/alert/SnackBar";
 import { useSelector, useDispatch } from 'react-redux';
-import { login_Actions } from '../../store/action/login_action';
+import { login_Actions } from '../store/action/login_action';
 
 const RedditTextField = styled((props) => (
     <TextField InputProps={{ disableUnderline: true }} {...props} />

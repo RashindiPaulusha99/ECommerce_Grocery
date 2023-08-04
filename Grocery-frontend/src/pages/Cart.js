@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
-import HeaderIcons from "../components/Home/HeaderIcons";
+import HeaderIcons from "../layouts/home/HeaderIcons";
 import Header from "../layouts/home/Header";
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import HomeService from "../Services/HomeService";
